@@ -1,3 +1,7 @@
+package main;
+
+import utils.Constants;
+
 import javax.swing.*;
 
 class Titanic extends JFrame {
@@ -7,7 +11,7 @@ class Titanic extends JFrame {
     }
 
     public Titanic() {
-        this.setTitle("Titanic Passengers Data");
+        this.setTitle("main.Titanic Passengers Data");
         this.setLayout(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
