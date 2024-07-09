@@ -1,6 +1,8 @@
 package entities;
 
-public class Passenger {
+import java.util.Comparator;
+
+public class Passenger implements Comparator<Passenger> {
     private int passengerID;
     private int survived;
     private int pClass;
@@ -38,8 +40,14 @@ public class Passenger {
     public int getSurvived() {
         return survived;
     }
+    public boolean isSurvived(){
+        if (getSurvived() == 1){
+            return true;
+        }
+        return false;
+    }
 
-    public int getpClass() {
+    public int getPClass() {
         return pClass;
     }
 
@@ -87,7 +95,7 @@ public class Passenger {
         sb.append("PassengerId: ").append(this.passengerID)
                 .append(", Survived? ").append((this.survived == 1 ? "true" : "false"))
                 .append(", Pclass: ").append(this.pClass)
-                .append(", entities.Name: ").append(getName())
+                .append(", Name: ").append(getName())
                 .append(", Sex: ").append(this.sex)
                 .append(", Age: ").append(this.age)
                 .append(", SibSp: ").append(sibSp)
@@ -97,5 +105,10 @@ public class Passenger {
                 .append(", Cabin: ").append(this.cabin)
                 .append(", Embarked: ").append(this.embarked);
         return sb.toString();
+    }
+
+    @Override
+    public int compare(Passenger passenger, Passenger other) {
+        return passenger.name.getFormattedName().compareTo(other.name.getFormattedName());
     }
 }

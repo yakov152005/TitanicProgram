@@ -1,25 +1,25 @@
 package main;
-
-import utils.Constants;
-
+import static utils.Constants.ManageScreen.*;
+import static utils.Constants.Text.*;
 import javax.swing.*;
 
 class Titanic extends JFrame {
 
     public static void main(String[] args) {
-        new Titanic();
+        SwingUtilities.invokeLater(() -> {
+            new Titanic().setVisible(true);
+        });
+
     }
 
     public Titanic() {
-        this.setTitle("main.Titanic Passengers Data");
+        this.setTitle(TEXT_1);
         this.setLayout(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-        this.add(new ManageScreen(0, 0, Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT));
+        this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        this.add(new ManageScreen(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
         this.setVisible(true);
-
     }
-
 
 
 }
