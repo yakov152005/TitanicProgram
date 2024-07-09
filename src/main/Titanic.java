@@ -3,13 +3,12 @@ import static utils.Constants.ManageScreen.*;
 import static utils.Constants.Text.*;
 import javax.swing.*;
 
-class Titanic extends JFrame {
+public class Titanic extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new Titanic().setVisible(true);
         });
-
     }
 
     public Titanic() {

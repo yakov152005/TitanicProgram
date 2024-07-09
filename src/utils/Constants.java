@@ -46,9 +46,17 @@ public class Constants {
         public static final String N_0 = "0";
         public static final String PATH = "src/data/";
         public static final String CSV = ".csv";
+        public static final String TXT = ".txt";
+        public static final String MALE = "male";
+        public static final String FEMALE = "female";
+        public static final String N = "\n";
+        public static final String C = "C";
+        public static final String Q = "Q";
+        public static final String S = "S";
         public static final String PATH_TO_DATA_FILE = PATH + "titanic" + CSV;
-        public static final String[] PASSENGER_CLASS_OPTIONS = { "All", "1", "2", "3"};
-        public static final String[] PASSENGER_SEX_OPTIONS = {"All", "male", "female"};
-        public static final String[] PASSENGER_EMBARKED_OPTIONS = {"All", "C", "Q", "S"};
+        public static final String PATH_TO_STATISTIC = "Statistic" + TXT;
+        public static final String[] PASSENGER_CLASS_OPTIONS = { TEXT_17, "1", "2", "3"};
+        public static final String[] PASSENGER_SEX_OPTIONS = { TEXT_17, MALE, FEMALE};
+        public static final String[] PASSENGER_EMBARKED_OPTIONS = { TEXT_17, C, Q, S};
     }
 }

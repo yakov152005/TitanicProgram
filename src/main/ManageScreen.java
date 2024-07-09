@@ -160,10 +160,10 @@ public class ManageScreen extends JPanel {
         this.exitButton.setBounds(x + (MARGIN_FROM_LEFT * 18), y + MARGIN_FROM_RIGHT,BUTTON_WIDTH,BUTTON_HEIGHT);
         this.add(exitButton);
 
-
         this.resultLabel = new JLabel(TEXT_15);
         this.resultLabel.setBounds(x + MARGIN_FROM_LEFT, y + MARGIN_FROM_RIGHT + (MARGIN_FROM_LEFT * 2), RESULT_WIDTH, RESULT_HEIGHT);
         this.add(this.resultLabel);
+
 
         this.filterButton.addActionListener(new ActionListener() {
             @Override
@@ -214,7 +214,7 @@ public class ManageScreen extends JPanel {
                     String sex = values[5].isEmpty() ? NULL : values[5].trim();
                     Double age = values[6].isEmpty() ? null : Double.parseDouble(values[6].trim());
                     int sibSp = Integer.parseInt(values[7].isEmpty() ? N_0 :values[7].trim());
-                    int parch = Integer.parseInt(values[8].trim());
+                    int parch = Integer.parseInt(values[8].isEmpty() ? N_0 :values[8].trim());
                     String ticket = values[9].isEmpty() ? NULL : values[9].trim();
                     Double fare = values[10].isEmpty() ? null : Double.parseDouble(values[10].trim());
                     String cabin = values[11].isEmpty() ? NULL : values[11].trim();
@@ -232,41 +232,157 @@ public class ManageScreen extends JPanel {
     private void performStatisticFileTxt() throws IOException {
         List<Passenger> statisticList = passengerList;
 
-        int count1st = 0, count2nd = 0, count3rd = 0;
-        int sumSurvived1st = 0, sumSurvived2nd = 0, sumSurvived3rd = 0;
+        int count1st = 0, count2nd = 0, count3rd = 0,
+                countMale = 0, countFemale = 0,
+                count10 = 0, count20 = 0, count30 = 0, count40 = 0, count50 = 0, count51PP = 0
+                ,countWithClose = 0, countWithoutClose = 0
+                ,countCostTicket_10 = 0, countCostTicket_30 = 0, countCostTicket_31PP = 0
+                ,count_C = 0, count_Q = 0, count_S = 0;
+
+        int sumSurvived1st = 0, sumSurvived2nd = 0, sumSurvived3rd = 0,
+                sumMale = 0, sumFemale = 0 ,
+                sum10 = 0, sum20 = 0, sum30 = 0, sum40 = 0, sum50 = 0, sum51PP = 0
+                ,sumWithClose = 0, sumWithoutClose = 0
+                ,sumCostTicket_10 = 0, sumCostTicket_30 = 0, sumCostTicket_31PP = 0
+                ,sum_C = 0, sum_Q = 0, sum_S = 0;;
+
 
         for (Passenger passenger : statisticList){
-            if (passenger.getPClass() == 1){
-                count1st++;
-            } else if (passenger.getPClass() == 2) {
-                count2nd++;
-            }else if (passenger.getPClass() == 3){
-                count3rd++;
-            }
+
+            if (passenger.getPClass() == 1){count1st++;}
+            else if (passenger.getPClass() == 2) {count2nd++;}
+            else if (passenger.getPClass() == 3){count3rd++;}
+
+            if (passenger.getSex().equalsIgnoreCase(MALE)){countMale++;}
+            else if (passenger.getSex().equalsIgnoreCase(FEMALE)) {countFemale++;}
+
+            try {
+                if (passenger.getAge() <= 10){count10++;}
+                else if (passenger.getAge() > 10 && passenger.getAge() <= 20) {count20++;}
+                else if (passenger.getAge() > 20 && passenger.getAge() <= 30) {count30++;}
+                else if (passenger.getAge() > 30 && passenger.getAge() <= 40) {count40++;}
+                else if (passenger.getAge() > 40 && passenger.getAge() <= 50) {count50++;}
+                else if (passenger.getAge() > 50) {count51PP++;}
+            }catch (NullPointerException e){}
+
+            if (passenger.getParch() >= 1 || passenger.getSibSp() >= 1){countWithClose++;}
+            else if (passenger.getParch() == 0 && passenger.getSibSp() == 0){countWithoutClose++;}
+
+            if (passenger.getFare() <= 10){countCostTicket_10++;}
+            else if (passenger.getFare() > 10 && passenger.getFare() <= 30){countCostTicket_30++;}
+            else if (passenger.getFare() > 30) {countCostTicket_31PP++;}
+
+            if (passenger.getEmbarked().equalsIgnoreCase(C)){count_C++;}
+            else if (passenger.getEmbarked().equalsIgnoreCase(Q)){count_Q++;}
+            else if (passenger.getEmbarked().equalsIgnoreCase(S)){count_S++;}
         }
 
         for (Passenger passenger : statisticList){
-            if (passenger.isSurvived() && passenger.getPClass() == 1){
-                sumSurvived1st++;
-            } else if (passenger.isSurvived() && passenger.getPClass() == 2){
-                sumSurvived2nd++;
-            }else if (passenger.isSurvived() && passenger.getPClass() == 3){
-                sumSurvived3rd++;
+            if (passenger.isSurvived()) {
+
+                if (passenger.getPClass() == 1){sumSurvived1st++;}
+                else if (passenger.getPClass() == 2){sumSurvived2nd++;}
+                else if (passenger.getPClass() == 3){sumSurvived3rd++;}
+
+                if (passenger.getSex().equalsIgnoreCase(MALE)){sumMale++;}
+                else if (passenger.getSex().equalsIgnoreCase(FEMALE)){sumFemale++;}
+
+                try {
+                    if (passenger.getAge() <= 10){sum10++;}
+                    else if (passenger.getAge() > 10 && passenger.getAge() <= 20) {sum20++;}
+                    else if (passenger.getAge() > 20 && passenger.getAge() <= 30) {sum30++;}
+                    else if (passenger.getAge() > 30 && passenger.getAge() <= 40) {sum40++;}
+                    else if (passenger.getAge() > 40 && passenger.getAge() <= 50) {sum50++;}
+                    else if (passenger.getAge() > 50) {sum51PP++;}
+                }catch (NullPointerException e){}
+
+                if (passenger.getParch() >= 1 || passenger.getSibSp() >= 1){sumWithClose++;}
+                else if (passenger.getParch() == 0 && passenger.getSibSp() == 0){sumWithoutClose++;}
+
+                if (passenger.getFare() <= 10){sumCostTicket_10++;}
+                else if (passenger.getFare() > 10 && passenger.getFare() <= 30){sumCostTicket_30++;}
+                else if (passenger.getFare() > 30) {sumCostTicket_31PP++;}
+
+                if (passenger.getEmbarked().equalsIgnoreCase(C)){sum_C++;}
+                else if (passenger.getEmbarked().equalsIgnoreCase(Q)){sum_Q++;}
+                else if (passenger.getEmbarked().equalsIgnoreCase(S)){sum_S++;}
+
             }
+
         }
 
         float avg1st = (float) sumSurvived1st / count1st * 100 ;
         float avg2nd = (float) sumSurvived2nd / count2nd * 100;
         float avg3rd = (float) sumSurvived3rd / count3rd * 100;
-        System.out.println("1 --->" + sumSurvived1st +" count: " + count1st);
-        System.out.println("2--->" + sumSurvived2nd +" count: " + count2nd);
-        System.out.println("3--->" + sumSurvived3rd +" count: " + count3rd);
-        FileWriter fw = new FileWriter(PATH + "Statistic.txt");
+
+        float avgMale = (float) sumMale / countMale * 100;
+        float avgFemale = (float) sumFemale / countFemale * 100;
+
+        float avg10 = (float) sum10 / count10 * 100;
+        float avg20 = (float) sum20 / count20 * 100;
+        float avg30 = (float) sum30 / count30 * 100;
+        float avg40 = (float) sum40 / count40 * 100;
+        float avg50 = (float) sum50 / count50 * 100;
+        float avg51PP = (float) sum51PP / count51PP * 100;
+
+        float avgWithClose = (float) sumWithClose / countWithClose * 100;
+        float avgWithoutClose = (float) sumWithoutClose / countWithoutClose * 100;
+
+        float avgCostTicket10 = (float) sumCostTicket_10 / countCostTicket_10 * 100;
+        float avgCostTicket30 = (float) sumCostTicket_30 / countCostTicket_30 * 100;
+        float avgCostTicket31PP = (float) sumCostTicket_31PP / countCostTicket_31PP * 100;
+
+        float avg_C = (float) sum_C / count_C * 100;
+        float avg_Q = (float) sum_Q / count_Q * 100;
+        float avg_S = (float) sum_S / count_S * 100;
+
+        FileWriter fw = new FileWriter(PATH + PATH_TO_STATISTIC);
         PrintWriter pw = new PrintWriter(fw);
-        pw.println("אחוזי הישרדות לפי מחלקה: ");
-        pw.print("1st -- >" + avg1st + "\n");
-        pw.print("2nd --> " + avg2nd + "\n");
-        pw.print("3rd --> " + avg3rd + "\n");
+
+        pw.println("אחוזי הישרדות לפי -->>");
+        pw.println("מחלקה:");
+        pw.print("1st --> " + avg1st + N);
+        pw.print("2nd --> " + avg2nd + N);
+        pw.print("3rd --> " + avg3rd + N);
+
+        pw.println(" ");
+
+        pw.println("מין:");
+        pw.print(MALE + " --> " + avgMale + N);
+        pw.print(FEMALE + " --> " + avgFemale + N);
+
+        pw.println(" ");
+
+        pw.println("קבוצת גיל:");
+        pw.print("0-10 --> " + avg10 + N );
+        pw.print("11-20 --> " + avg20 + N );
+        pw.print("21-30 --> " + avg30 + N );
+        pw.print("31-40 --> " + avg40 + N );
+        pw.print("41-50 --> " + avg50 + N );
+        pw.print("51+ --> " + avg51PP + N );
+
+        pw.println(" ");
+
+        pw.println("האם יש בני משפחה על הסיפון:");
+        pw.print("With relatives --> " + avgWithClose + N);
+        pw.print("Without relatives --> " + avgWithoutClose + N);
+
+        pw.println(" ");
+
+        pw.println("עלות כרטיס:");
+        pw.print("0-10 --> " + avgCostTicket10 + N );
+        pw.print("11-30 --> " + avgCostTicket30 + N );
+        pw.print("31+ --> " + avgCostTicket31PP + N );
+
+        pw.println(" ");
+
+        pw.println("הנמל שממנו העפילו לספינה:");
+        pw.print("C – צ'רבורג --> " + avg_C + N );
+        pw.print("Q – קווינסטאון --> " + avg_Q + N );
+        pw.print("S – סאות'המפטון --> " + avg_S + N );
+
+
+        JOptionPane.showMessageDialog(null, TEXT_19);
         pw.close();
     }
 
