@@ -20,6 +20,7 @@ public class ManageScreen extends JPanel {
     private JComboBox<String> classComboBox;
     private JComboBox<String> sexComboBox;
     private JComboBox<String> embarkedComboBox;
+    private JComboBox<String> dataGroupingComboBox;
 
     private JTextField minPassengerIdField;
     private JTextField maxPassengerIdField;
@@ -32,11 +33,13 @@ public class ManageScreen extends JPanel {
     private JTextField cabinField;
 
     private JButton filterButton;
-    private JButton crateStatisticFile;
+    private JButton crateStatisticFileButton;
     private JButton exitButton;
 
 
-    private JLabel resultLabel;
+    private JLabel forDataGroupLabel;
+    private JLabel resultFilterLabel;
+    private JLabel resultDataGroupLabel;
 
     private List<Passenger> passengerList;
     private String titleLine;
@@ -46,7 +49,6 @@ public class ManageScreen extends JPanel {
         this.passengerList = new ArrayList<>();
         this.setLayout(null);
         this.setBounds(x, y + MARGIN_FROM_TOP, width, height);
-
 
         loadPassengerData();
         System.out.println(titleLine);
@@ -58,7 +60,6 @@ public class ManageScreen extends JPanel {
         this.classComboBox = new JComboBox<>(PASSENGER_CLASS_OPTIONS);
         this.classComboBox.setBounds(classLabel.getX() + classLabel.getWidth() + 1, classLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.classComboBox);
-
 
         JLabel sexLabel = new JLabel(TEXT_3);
         sexLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_LEFT * 2), LABEL_WIDTH, LABEL_HEIGHT);
@@ -152,18 +153,29 @@ public class ManageScreen extends JPanel {
         this.filterButton.setBounds(x + MARGIN_FROM_LEFT, y + MARGIN_FROM_RIGHT, BUTTON_WIDTH, BUTTON_HEIGHT);
         this.add(this.filterButton);
 
-        this.crateStatisticFile = new JButton(TEXT_21);
-        this.crateStatisticFile.setBounds(x + (MARGIN_FROM_LEFT * 9) + 10, y + MARGIN_FROM_RIGHT,BUTTON_WIDTH,BUTTON_HEIGHT);
-        this.add(crateStatisticFile);
+        this.crateStatisticFileButton = new JButton(TEXT_21);
+        this.crateStatisticFileButton.setBounds(x + (MARGIN_FROM_LEFT * 9) + 10, y + MARGIN_FROM_RIGHT,BUTTON_WIDTH,BUTTON_HEIGHT);
+        this.add(crateStatisticFileButton);
 
         this.exitButton = new JButton(TEXT_18);
         this.exitButton.setBounds(x + (MARGIN_FROM_LEFT * 18), y + MARGIN_FROM_RIGHT,BUTTON_WIDTH,BUTTON_HEIGHT);
         this.add(exitButton);
 
-        this.resultLabel = new JLabel(TEXT_15);
-        this.resultLabel.setBounds(x + MARGIN_FROM_LEFT, y + MARGIN_FROM_RIGHT + (MARGIN_FROM_LEFT * 2), RESULT_WIDTH, RESULT_HEIGHT);
-        this.add(this.resultLabel);
+        this.forDataGroupLabel = new JLabel(TEXT_22);
+        this.forDataGroupLabel.setBounds(x + MARGIN_FROM_LEFT, y + MARGIN_FROM_RIGHT + DEF_1 * 2, LABEL_WIDTH, LABEL_HEIGHT);
+        this.add(forDataGroupLabel);
 
+        this.dataGroupingComboBox = new JComboBox<>(PASSENGER_DATA_GROUPING);
+        this.dataGroupingComboBox.setBounds(classLabel.getX() + classLabel.getWidth() ,classLabel.getY() + MARGIN_FROM_RIGHT + DEF_1 * 2 ,COMBO_BOX_WIDTH,COMBO_BOX_HEIGHT);
+        this.add(dataGroupingComboBox);
+
+        this.resultDataGroupLabel = new JLabel(TEXT_15);
+        this.resultDataGroupLabel.setBounds(x + MARGIN_FROM_LEFT * 15, y + MARGIN_FROM_RIGHT + DEF_1 * 2, RESULT_WIDTH, RESULT_HEIGHT);
+        this.add(this.resultDataGroupLabel);
+
+        this.resultFilterLabel = new JLabel(TEXT_15);
+        this.resultFilterLabel.setBounds(x + MARGIN_FROM_LEFT, y + MARGIN_FROM_RIGHT + (MARGIN_FROM_LEFT * 2), RESULT_WIDTH, RESULT_HEIGHT);
+        this.add(this.resultFilterLabel);
 
         this.filterButton.addActionListener(new ActionListener() {
             @Override
@@ -176,7 +188,7 @@ public class ManageScreen extends JPanel {
             }
         });
 
-        this.crateStatisticFile.addActionListener(new ActionListener() {
+        this.crateStatisticFileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -184,6 +196,13 @@ public class ManageScreen extends JPanel {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+
+        this.dataGroupingComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performDataGrouping();
             }
         });
 
@@ -227,6 +246,224 @@ public class ManageScreen extends JPanel {
                 } catch (NumberFormatException e) {System.err.println(TEXT_16 + line);}
             }
         } catch (Exception e) {System.out.println(e.getMessage());}
+    }
+
+    private void performDataGrouping(){
+        Map<String, Float> dataGroupMap = new HashMap<>();
+        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
+
+        if (selectedClass.equals(TEXT_24)) {
+            Map<Integer, Integer> classCountMap = new HashMap<>();
+
+            for (Passenger passenger : passengerList) {
+                classCountMap.put(passenger.getPClass(), classCountMap.getOrDefault(passenger.getPClass(), 0) + 1);
+            }
+
+            for (Map.Entry<Integer, Integer> entry : classCountMap.entrySet()) {
+                float percentage = (float) entry.getValue() / passengerList.size() * 100;
+                dataGroupMap.put("|" + entry.getKey()  + "|", percentage);
+            }
+        }
+
+        /**
+         * add method for all option
+         */
+
+
+
+
+
+
+
+
+        /**
+         * ****************************
+         */
+
+        /**
+         * this map sorted for all options dont forget to creat a temp map for every option and change temp to sorted map
+         */
+        Map<String, Float> sortedDataGroupMap = dataGroupMap.entrySet().stream()
+                .sorted(Map.Entry.<String, Float>comparingByValue().reversed())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+
+        StringBuilder resultText = new StringBuilder(TOTAL).append(N);
+        for (Map.Entry<String, Float> entry : sortedDataGroupMap.entrySet()) {
+            resultText.append(entry.getKey()).append(" ").append(entry.getValue()).append("% " + N);
+        }
+
+        /**
+         * print to console
+         */
+        System.out.println(resultText);
+        /**
+         * print to GUI
+         */
+        resultDataGroupLabel.setText(resultText.toString());
+    }
+
+    private void check(){
+        Map<String, Float> dataGroupMap = new HashMap<>();
+
+
+        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
+        int count1 = 0, count2 = 0, count3 = 0, size = passengerList.size();
+
+        if (selectedClass.equals(TEXT_24)){
+            for (Passenger passenger : passengerList){
+                if (passenger.getPClass() == 1){count1++;}
+                else if (passenger.getPClass() == 2) {count2++;}
+                else if (passenger.getPClass() == 3) {count3++;}
+            }
+            float avg1 = (float) count1 / size * 100;
+            float avg2 = (float) count2 / size * 100;
+            float avg3 = (float) count3 / size * 100;
+
+            dataGroupMap.put("1st:",avg1);
+            dataGroupMap.put("2nd:",avg2);
+            dataGroupMap.put("3rd:",avg3);
+        }
+
+        resultDataGroupLabel.setText(TOTAL);
+        for (Map.Entry<String,Float> m : dataGroupMap.entrySet()){
+            resultDataGroupLabel.setText(m.getKey() + " " + m.getValue());
+        }
+
+    }
+
+
+    private void performFiltering() throws IOException {
+        List<Passenger> filteredList = passengerList;
+
+
+        String selectedClass = classComboBox.getSelectedItem().toString();
+        if (!selectedClass.equals(TEXT_17)) {
+            int selectedClassInt = Integer.parseInt(selectedClass);
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getPClass() == selectedClassInt)
+                    .collect(Collectors.toList());
+        }
+
+
+        String selectedSex = sexComboBox.getSelectedItem().toString();
+        if (!selectedSex.equals(TEXT_17)) {
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getSex().equals(selectedSex))
+                    .collect(Collectors.toList());
+        }
+
+
+        String selectedEmbarked = embarkedComboBox.getSelectedItem().toString();
+        if (!selectedEmbarked.equals(TEXT_17)) {
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getEmbarked().equals(selectedEmbarked))
+                    .collect(Collectors.toList());
+        }
+
+
+        String minPassengerIdStr = minPassengerIdField.getText().trim();
+        String maxPassengerIdStr = maxPassengerIdField.getText().trim();
+        if (!minPassengerIdStr.isEmpty()) {
+            int minPassengerId = Integer.parseInt(minPassengerIdStr);
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getPassengerID() >= minPassengerId)
+                    .collect(Collectors.toList());
+        }
+
+        if (!maxPassengerIdStr.isEmpty()) {
+            int maxPassengerId = Integer.parseInt(maxPassengerIdStr);
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getPassengerID() <= maxPassengerId)
+                    .collect(Collectors.toList());
+        }
+
+
+        String nameFilter = nameField.getText().trim();
+        if (!nameFilter.isEmpty()) {
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getName().toString().contains(nameFilter))
+                    .collect(Collectors.toList());
+        }
+
+
+        String sibSpFilter = sibSpField.getText().trim();
+        if (!sibSpFilter.isEmpty()) {
+            int sibSp = Integer.parseInt(sibSpFilter);
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getSibSp() == sibSp)
+                    .collect(Collectors.toList());
+        }
+
+
+        String parchFilter = parchField.getText().trim();
+        if (!parchFilter.isEmpty()) {
+            int parch = Integer.parseInt(parchFilter);
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getParch() == parch)
+                    .collect(Collectors.toList());
+        }
+
+
+        String ticketFilter = ticketField.getText().trim();
+        if (!ticketFilter.isEmpty()) {
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getTicket().contains(ticketFilter))
+                    .collect(Collectors.toList());
+        }
+
+
+        String minFareStr = minFareField.getText().trim();
+        String maxFareStr = maxFareField.getText().trim();
+        if (!minFareStr.isEmpty()) {
+            double minFare = Double.parseDouble(minFareStr);
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getFare() >= minFare)
+                    .collect(Collectors.toList());
+        }
+        if (!maxFareStr.isEmpty()) {
+            double maxFare = Double.parseDouble(maxFareStr);
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getFare() <= maxFare)
+                    .collect(Collectors.toList());
+        }
+
+
+        String cabinFilter = cabinField.getText().trim();
+        if (!cabinFilter.isEmpty()) {
+            filteredList = filteredList.stream()
+                    .filter(p -> p.getCabin().contains(cabinFilter))
+                    .collect(Collectors.toList());
+        }
+
+
+        this.csvC = csvCounter.incrementAndGet();
+        String numberForFile = csvC + CSV;
+        Set<Passenger> savedHashSet = filteredList.stream()
+                .sorted(Comparator.comparing(p -> {
+                    return p.getName().getFormattedName();
+                }))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        new Thread(() -> {
+            try {
+                saveCsvFile(savedHashSet, numberForFile);
+
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(null, TEXT_19);});
+
+            } catch (IOException e) {
+                SwingUtilities.invokeLater(() -> {
+                    JOptionPane.showMessageDialog(null, TEXT_20);});}
+        }).start();
+
+
+        filteredList.forEach(System.out::println);
+        int totalPassengers = filteredList.size();
+        long survivedCount = filteredList.stream().filter(Passenger::isSurvived).count();
+        long notSurvivedCount = totalPassengers - survivedCount;
+
+        resultFilterLabel.setText(TOTAL + totalPassengers + ", Survived: " + survivedCount + ", Not Survived: " + notSurvivedCount);
     }
 
     private void performStatisticFileTxt() throws IOException {
@@ -384,139 +621,6 @@ public class ManageScreen extends JPanel {
 
         JOptionPane.showMessageDialog(null, TEXT_19);
         pw.close();
-    }
-
-    private void performFiltering() throws IOException {
-        List<Passenger> filteredList = passengerList;
-
-
-        String selectedClass = classComboBox.getSelectedItem().toString();
-        if (!selectedClass.equals(TEXT_17)) {
-            int selectedClassInt = Integer.parseInt(selectedClass);
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getPClass() == selectedClassInt)
-                    .collect(Collectors.toList());
-        }
-
-
-        String selectedSex = sexComboBox.getSelectedItem().toString();
-        if (!selectedSex.equals(TEXT_17)) {
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getSex().equals(selectedSex))
-                    .collect(Collectors.toList());
-        }
-
-
-        String selectedEmbarked = embarkedComboBox.getSelectedItem().toString();
-        if (!selectedEmbarked.equals(TEXT_17)) {
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getEmbarked().equals(selectedEmbarked))
-                    .collect(Collectors.toList());
-        }
-
-
-        String minPassengerIdStr = minPassengerIdField.getText().trim();
-        String maxPassengerIdStr = maxPassengerIdField.getText().trim();
-        if (!minPassengerIdStr.isEmpty()) {
-            int minPassengerId = Integer.parseInt(minPassengerIdStr);
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getPassengerID() >= minPassengerId)
-                    .collect(Collectors.toList());
-        }
-
-        if (!maxPassengerIdStr.isEmpty()) {
-            int maxPassengerId = Integer.parseInt(maxPassengerIdStr);
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getPassengerID() <= maxPassengerId)
-                    .collect(Collectors.toList());
-        }
-
-
-        String nameFilter = nameField.getText().trim();
-        if (!nameFilter.isEmpty()) {
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getName().toString().contains(nameFilter))
-                    .collect(Collectors.toList());
-        }
-
-
-        String sibSpFilter = sibSpField.getText().trim();
-        if (!sibSpFilter.isEmpty()) {
-            int sibSp = Integer.parseInt(sibSpFilter);
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getSibSp() == sibSp)
-                    .collect(Collectors.toList());
-        }
-
-
-        String parchFilter = parchField.getText().trim();
-        if (!parchFilter.isEmpty()) {
-            int parch = Integer.parseInt(parchFilter);
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getParch() == parch)
-                    .collect(Collectors.toList());
-        }
-
-
-        String ticketFilter = ticketField.getText().trim();
-        if (!ticketFilter.isEmpty()) {
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getTicket().contains(ticketFilter))
-                    .collect(Collectors.toList());
-        }
-
-
-        String minFareStr = minFareField.getText().trim();
-        String maxFareStr = maxFareField.getText().trim();
-        if (!minFareStr.isEmpty()) {
-            double minFare = Double.parseDouble(minFareStr);
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getFare() >= minFare)
-                    .collect(Collectors.toList());
-        }
-        if (!maxFareStr.isEmpty()) {
-            double maxFare = Double.parseDouble(maxFareStr);
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getFare() <= maxFare)
-                    .collect(Collectors.toList());
-        }
-
-
-        String cabinFilter = cabinField.getText().trim();
-        if (!cabinFilter.isEmpty()) {
-            filteredList = filteredList.stream()
-                    .filter(p -> p.getCabin().contains(cabinFilter))
-                    .collect(Collectors.toList());
-        }
-
-
-        this.csvC = csvCounter.incrementAndGet();
-        String numberForFile = csvC + CSV;
-        Set<Passenger> savedHashSet = filteredList.stream()
-                .sorted(Comparator.comparing(p -> {
-                    return p.getName().getFormattedName();
-                }))
-                .collect(Collectors.toCollection(LinkedHashSet::new));
-
-        new Thread(() -> {
-            try {
-                saveCsvFile(savedHashSet, numberForFile);
-
-                SwingUtilities.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(null, TEXT_19);});
-
-            } catch (IOException e) {
-                SwingUtilities.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(null, TEXT_20);});}
-        }).start();
-
-
-        filteredList.forEach(System.out::println);
-        int totalPassengers = filteredList.size();
-        long survivedCount = filteredList.stream().filter(Passenger::isSurvived).count();
-        long notSurvivedCount = totalPassengers - survivedCount;
-
-        resultLabel.setText("Total: " + totalPassengers + ", Survived: " + survivedCount + ", Not Survived: " + notSurvivedCount);
     }
 
     private void saveCsvFile(Set<Passenger> savedHashSet, String numberForFile) throws IOException {

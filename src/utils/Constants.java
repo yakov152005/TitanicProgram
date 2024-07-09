@@ -17,6 +17,7 @@ public class Constants {
         public static final int BUTTON_HEIGHT = 25;
         public static final int RESULT_WIDTH = 300;
         public static final int RESULT_HEIGHT = 25;
+        public static final int DEF_1 = 50;
     }
 
     public static class Text{
@@ -42,6 +43,10 @@ public class Constants {
         public static final String TEXT_19 = "File saved successfully!";
         public static final String TEXT_20 = "Failed to save file!";
         public static final String TEXT_21 = "Create statistic file";
+        public static final String TEXT_22 = "Data Grouping: ";
+        public static final String TEXT_23 = "Select";
+        public static final String TEXT_24 = "Pclass";
+        public static final String TOTAL = "Total: ";
         public static final String NULL = "null";
         public static final String N_0 = "0";
         public static final String PATH = "src/data/";
@@ -58,5 +63,6 @@ public class Constants {
         public static final String[] PASSENGER_CLASS_OPTIONS = { TEXT_17, "1", "2", "3"};
         public static final String[] PASSENGER_SEX_OPTIONS = { TEXT_17, MALE, FEMALE};
         public static final String[] PASSENGER_EMBARKED_OPTIONS = { TEXT_17, C, Q, S};
+        public static final String[] PASSENGER_DATA_GROUPING = {TEXT_23,TEXT_24,TEXT_3,TEXT_4,TEXT_7,TEXT_8,TEXT_9,TEXT_12,TEXT_13};
     }
 }
