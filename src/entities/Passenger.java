@@ -44,16 +44,10 @@ public class Passenger implements Comparator<Passenger> {
     }
 
     public String getSurvivedString(){
-        if (isSurvived()){
-            return TEXT_25;
-        }
-        return "Not " + TEXT_25;
+        return isSurvived() ? TEXT_25 : "Not " + TEXT_25;
     }
     public boolean isSurvived(){
-        if (getSurvived() == 1){
-            return true;
-        }
-        return false;
+       return getSurvived() == 1;
     }
 
     public int getPClass() {

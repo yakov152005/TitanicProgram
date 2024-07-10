@@ -16,31 +16,31 @@ import static utils.Constants.ManageScreen.*;
 import static utils.Constants.Text.*;
 
 public class ManageScreen extends JPanel {
-    private static AtomicInteger csvCounter = new AtomicInteger();
+    private static final AtomicInteger csvCounter = new AtomicInteger();
 
-    private JComboBox<String> classComboBox;
-    private JComboBox<String> sexComboBox;
-    private JComboBox<String> embarkedComboBox;
-    private JComboBox<String> dataGroupingComboBox;
+    private final JComboBox<String> classComboBox;
+    private final JComboBox<String> sexComboBox;
+    private final JComboBox<String> embarkedComboBox;
+    private final JComboBox<String> dataGroupingComboBox;
 
-    private JTextField minPassengerIdField;
-    private JTextField maxPassengerIdField;
-    private JTextField nameField;
-    private JTextField sibSpField;
-    private JTextField parchField;
-    private JTextField ticketField;
-    private JTextField minFareField;
-    private JTextField maxFareField;
-    private JTextField cabinField;
+    private final JTextField minPassengerIdField;
+    private final JTextField maxPassengerIdField;
+    private final JTextField nameField;
+    private final JTextField sibSpField;
+    private final JTextField parchField;
+    private final JTextField ticketField;
+    private final JTextField minFareField;
+    private final JTextField maxFareField;
+    private final JTextField cabinField;
 
-    private JButton filterButton;
-    private JButton crateStatisticFileButton;
-    private JButton exitButton;
+    private final JButton filterButton;
+    private final JButton crateStatisticFileButton;
+    private final JButton exitButton;
 
 
-    private JLabel forDataGroupLabel;
-    private JLabel resultFilterLabel;
-    private JLabel resultDataGroupLabel;
+    private final JLabel forDataGroupLabel;
+    private final JLabel resultFilterLabel;
+    private final JLabel resultDataGroupLabel;
 
     private List<Passenger> passengerList;
     private String titleLine;
