@@ -1,69 +1,33 @@
-328,1,2,"(Ada E Hall)  Ball",female,36.0,0,0,28551,13.0,D,S
-517,1,2,"(Amelia Milley)  Lemore",female,34.0,0,0,C.A. 34260,10.5,F33,S
-273,1,2,"(Elizabeth Anne Maidment)  Mellinger",female,41.0,0,1,250644,19.5,null,S
-67,1,2,"(Elizabeth Ramell)  Nye",female,29.0,0,0,C.A. 29395,10.5,F33,S
-866,1,2,"(Karolina)  Bystrom",female,42.0,0,0,236852,13.0,null,S
-260,1,2,"(Lutie Davis)  Parrish",female,50.0,0,1,230433,26.0,null,S
-16,1,2,"(Mary D Kingcome)  Hewlett",female,55.0,0,0,248706,16.0,null,S
-773,0,2,"(Mary)  Mack",female,57.0,0,0,S.O./P.P. 3,10.5,E77,S
-191,1,2,"(Rosa)  Pinsky",female,32.0,0,0,234604,13.0,null,S
 818,0,2,"Albert  Mallet",male,31.0,1,1,S.C./PARIS 2079,37.0042,null,C
-324,1,2,"Albert Francis (Sylvia Mae Harbaugh)  Caldwell",female,22.0,1,1,248738,29.0,null,S
 79,1,2,"Alden Gates  Caldwell",male,0.83,0,2,248738,29.0,null,S
 792,0,2,"Alfred  Gaskell",male,16.0,0,0,239865,26.0,null,S
 399,0,2,"Alfred  Pain",male,23.0,0,0,244278,10.5,null,S
 414,0,2,"Alfred Fleming  Cunningham",male,null,0,0,239853,0.0,null,S
-616,1,2,"Alice  Herman",female,24.0,1,2,220845,65.0,null,S
 73,0,2,"Ambrose Jr  Hood",male,21.0,0,0,S.O.C. 14879,73.5,null,S
-346,1,2,"Amelia Mildred  Brown",female,24.0,0,0,248733,13.0,F33,S
-474,1,2,"Amin S (Marie Marthe Thuillard)  Jerwan",female,23.0,0,0,SC/AH Basle 541,13.7917,D,C
 828,1,2,"Andre  Mallet",male,1.0,0,2,S.C./PARIS 2079,37.0042,null,C
-748,1,2,"Anna  Sinkkonen",female,30.0,0,0,250648,13.0,null,S
-358,0,2,"Annie Clemmer  Funk",female,38.0,0,0,237671,13.0,null,S
-721,1,2,"Annie Jessie Nina  Harper",female,6.0,0,1,248727,33.0,null,S
 482,0,2,"Anthony Wood Archie  Frost",male,null,0,0,239854,0.0,null,S
 229,0,2,"Arne Jonas  Fahlstrom",male,18.0,0,0,236171,13.0,null,S
 809,0,2,"August  Meyer",male,39.0,0,0,248723,13.0,null,S
 315,0,2,"Benjamin  Hart",male,43.0,1,1,F.C.C. 13529,26.25,null,S
-441,1,2,"Benjamin (Esther Ada Bloomfield)  Hart",female,45.0,1,1,F.C.C. 13529,26.25,null,S
-85,1,2,"Bertha  Ilett",female,17.0,0,0,SO/C 14885,10.5,null,S
-390,1,2,"Bertha  Lehmann",female,17.0,0,0,SC 1748,12.0,null,C
 674,1,2,"Charles  Wilhelms",male,31.0,0,0,244270,13.0,null,S
-433,1,2,"Charles Alexander (Alice Adelaide Slow)  Louch",female,42.0,1,0,SC/AH 3085,26.0,null,S
 18,1,2,"Charles Eugene  Williams",male,null,0,0,244373,13.0,null,S
 344,0,2,"Charles Frederick Waddington  Sedgwick",male,25.0,0,0,244361,13.0,null,S
 696,0,2,"Charles Henry  Chapman",male,52.0,0,0,248731,13.5,null,S
 386,0,2,"Charles Henry  Davies",male,18.0,0,0,S.O.C. 14879,73.5,null,S
 627,0,2,"Charles Leonard  Kirkland",male,57.0,0,0,219533,12.35,null,Q
-427,1,2,"Charles V (Ada Maria Winfield)  Clarke",female,28.0,1,0,2003,26.0,null,S
-212,1,2,"Clear Annie  Cameron",female,35.0,0,0,F.C.C. 13528,21.0,null,S
-59,1,2,"Constance Mirium  West",female,5.0,1,2,C.A. 34651,27.75,null,S
 266,0,2,"David  Reeves",male,36.0,0,0,C.A. 17248,10.5,null,S
 145,0,2,"Edgardo Samuel  Andrew",male,18.0,0,0,231945,11.5,null,S
 341,1,2,"Edmond Roger  Navratil",male,2.0,1,1,230080,26.0,F2,S
 544,1,2,"Edward  Beane",male,32.0,1,0,2908,26.0,null,S
-547,1,2,"Edward (Ethel Clarke)  Beane",female,19.0,1,0,2908,26.0,null,S
 34,0,2,"Edward H  Wheadon",male,66.0,0,0,C.A. 24579,10.5,null,S
-718,1,2,"Edwina Celia Winnie  Troutt",female,27.0,0,0,34218,10.5,E101,S
 451,0,2,"Edwy Arthur  West",male,36.0,1,2,C.A. 34651,27.75,null,S
-473,1,2,"Edwy Arthur (Ada Mary Worth)  West",female,33.0,1,2,C.A. 34651,27.75,null,S
-775,1,2,"Elizabeth (Eliza Needs)  Hocking",female,54.0,1,3,29105,23.0,null,S
-459,1,2,"Ellen  Toomey",female,50.0,0,0,F.C.C. 13531,10.5,null,S
-652,1,2,"Elsie  Doling",female,18.0,0,1,231919,23.0,null,S
 136,0,2,"Emile  Richard",male,23.0,0,0,SC/PARIS 2133,15.0458,null,C
-57,1,2,"Emily  Rugg",female,21.0,0,0,C.A. 31026,10.5,null,S
-444,1,2,"Encarnacion  Reynaldo",female,28.0,0,0,230434,13.0,null,S
 675,0,2,"Ennis Hastings  Watson",male,3.0,0,0,239856,0.0,null,S
 343,0,2,"Erik Gustaf  Collander",male,28.0,0,0,248740,13.0,null,S
 318,0,2,"Ernest  Moraweck",male,54.0,0,0,29011,14.0,null,S
 250,0,2,"Ernest Courtenay  Carter",male,54.0,1,0,244252,26.0,null,S
-855,0,2,"Ernest Courtenay (Lilian Hughes)  Carter",female,44.0,1,0,244252,26.0,null,S
 233,0,2,"Ernst Adolf  Sjostedt",male,59.0,0,0,237442,13.5,null,S
-577,1,2,"Ethel  Garside",female,34.0,0,0,243880,13.0,null,S
-536,1,2,"Eva Miriam  Hart",female,7.0,0,2,F.C.C. 13529,26.25,null,S
-707,1,2,"Florence Fannie  Kelly",female,45.0,0,0,223596,13.5,null,S
 278,0,2,"Francis Frank  Parkes",male,null,0,0,239853,0.0,null,S
-507,1,2,"Frederick Charles (Jane Richards)  Quick",female,33.0,0,2,26360,26.0,null,S
 862,0,2,"Frederick Edward  Giles",male,21.0,1,0,28134,11.5,null,S
 884,0,2,"Frederick James  Banfield",male,28.0,0,0,C.A./SOTON 34068,10.5,null,S
 239,0,2,"Frederick William  Pengelly",male,19.0,0,0,28665,10.5,null,S
@@ -73,64 +37,38 @@
 832,1,2,"George Sibley  Richards",male,0.83,1,1,29106,18.75,null,S
 214,0,2,"Hans Kristensen  Givard",male,30.0,0,0,250646,13.0,null,S
 638,0,2,"Harvey  Collyer",male,31.0,1,1,C.A. 31921,26.25,null,S
-802,1,2,"Harvey (Charlotte Annie Tate)  Collyer",female,31.0,1,1,C.A. 31921,26.25,null,S
-200,0,2,"Henriette (Mrs Harbeck)  Yrois",female,24.0,0,0,248747,13.0,null,S
 673,0,2,"Henry Michael  Mitchell",male,70.0,0,0,C.A. 24580,10.5,null,S
 724,0,2,"Henry Price  Hodges",male,50.0,0,0,250643,13.0,null,S
 706,0,2,"Henry Samuel (Mr Henry Marshall)  Morley",male,39.0,0,0,250655,26.0,null,S
-323,1,2,"Hilda Mary  Slayter",female,30.0,0,0,234818,12.35,null,Q
 464,0,2,"Jacob Christian  Milling",male,48.0,0,0,234360,13.0,null,S
-162,1,2,"James (Elizabeth Bessie Inglis Milne)  Watt",female,40.0,0,0,C.A. 33595,15.75,null,S
 222,0,2,"James H  Bracken",male,27.0,0,0,220367,13.0,null,S
-417,1,2,"James Vivian (Lulu Thorne Christian)  Drew",female,34.0,1,1,28220,32.5,null,S
-597,1,2,"Jessie Wills  Leitch",female,null,0,0,248727,33.0,null,S
-751,1,2,"Joan  Wells",female,4.0,1,1,29103,23.0,null,S
 440,0,2,"Johan Henrik Johannesson  Kvillner",male,31.0,0,0,C.A. 18723,10.5,null,S
 849,0,2,"John  Harper",male,28.0,0,1,248727,33.0,null,S
 587,0,2,"John Denzil  Jarvis",male,47.0,0,0,237565,15.0,null,S
 595,0,2,"John Henry  Chapman",male,37.0,1,0,SC/AH 29037,26.0,null,S
 550,1,2,"John Morgan Jr  Davies",male,8.0,1,1,C.A. 33112,36.75,null,S
-99,1,2,"John T (Ada Julia Bone)  Doling",female,34.0,0,1,231919,23.0,null,S
 865,0,2,"John William  Gill",male,24.0,0,0,233866,13.0,null,S
-609,1,2,"Joseph (Juliette Marie Louise Lafargue)  Laroche",female,22.0,1,2,SC/Paris 2123,41.5792,null,C
 146,0,2,"Joseph Charles  Nicholls",male,19.0,1,1,C.A. 33112,36.75,null,S
 21,0,2,"Joseph J  Fynney",male,35.0,0,0,239865,26.0,null,S
 686,0,2,"Joseph Philippe Lemercier  Laroche",male,25.0,1,2,SC/Paris 2123,41.5792,null,C
-581,1,2,"Julie Rachel  Christy",female,25.0,1,1,237789,30.0,null,S
 887,0,2,"Juozas  Montvila",male,27.0,0,0,211536,13.0,null,S
-388,1,2,"Kate  Buss",female,36.0,0,0,27849,13.0,null,S
-428,1,2,"Kate Florence (Mrs Kate Louise Phillips Marshall)  Phillips",female,19.0,0,0,250655,26.0,null,S
 729,0,2,"Kurt Arnold Gottfrid  Bryhl",male,25.0,1,0,236853,26.0,null,S
 22,1,2,"Lawrence  Beesley",male,34.0,0,0,248698,13.0,D56,S
 620,0,2,"Lawrence  Gavey",male,26.0,0,0,31028,10.5,null,S
 656,0,2,"Leonard Mark  Hickman",male,24.0,2,0,S.O.C. 14879,73.5,null,S
-134,1,2,"Leopold (Mathilde Francoise Pede)  Weisz",female,29.0,1,0,228414,26.0,null,S
 666,0,2,"Lewis  Hickman",male,32.0,2,0,S.O.C. 14879,73.5,null,S
-54,1,2,"Lizzie (Elizabeth Anne Wilkinson)  Faunthorpe",female,29.0,1,0,2926,26.0,null,S
-527,1,2,"Lucy  Ridsdale",female,50.0,0,0,W./C. 14258,10.5,null,S
-418,1,2,"Lyyli Karoliina  Silven",female,18.0,0,2,250652,13.0,null,S
-447,1,2,"Madeleine Violet  Mellinger",female,13.0,0,1,250644,19.5,null,S
 548,1,2,"Manent Mr. Julian  Padro",male,null,0,0,SC/PARIS 2146,13.8625,null,C
-347,1,2,"Marion Elsie  Smith",female,40.0,0,0,31418,13.0,null,S
-619,1,2,"Marion Louise  Becker",female,4.0,2,1,230136,39.0,F4,S
-238,1,2,"Marjorie Lottie  Collyer",female,8.0,0,2,C.A. 31921,26.25,null,S
 801,0,2,"Martin  Ponesell",male,34.0,0,0,250647,13.0,null,S
-636,1,2,"Mary  Davis",female,28.0,0,0,237668,13.0,null,S
 289,1,2,"Masabumi  Hosono",male,42.0,0,0,237798,13.0,null,S
 149,0,2,"Michel (Louis M Hoffman)  Navratil",male,36.5,0,2,230080,26.0,F2,S
 194,1,2,"Michel M  Navratil",male,3.0,1,1,230080,26.0,F2,S
-867,1,2,"More Miss. Asuncion  Duran",female,27.0,1,0,SC/PARIS 2149,13.8583,null,C
 735,0,2,"Moses Aaron  Troupiansky",male,23.0,0,0,233639,13.0,null,S
 362,0,2,"Mr. Sebastiano  del",male,29.0,1,0,SC/PARIS 2167,27.7208,null,C
 123,0,2,"Nicholas  Nasser",male,32.5,1,0,237736,30.0708,null,C
-10,1,2,"Nicholas (Adele Achem)  Nasser",female,14.0,1,0,237736,30.0708,null,C
-304,1,2,"Nora A  Keane",female,null,0,0,226593,12.35,E101,Q
 552,0,2,"Percival James R  Sharp",male,27.0,0,0,244358,26.0,null,S
 758,0,2,"Percy Andrew  Bailey",male,18.0,0,0,29108,11.5,null,S
 398,0,2,"Peter David  McKane",male,46.0,0,0,28403,26.0,null,S
 477,0,2,"Peter Henry  Renouf",male,34.0,1,0,31027,21.0,null,S
-727,1,2,"Peter Henry (Lillian Jefferys)  Renouf",female,30.0,3,0,31027,21.0,null,S
-531,1,2,"Phyllis May  Quick",female,2.0,1,1,26360,26.0,null,S
 179,0,2,"Reginald  Hale",male,30.0,0,0,250653,13.0,null,S
 243,0,2,"Reginald Charles  Coleridge",male,29.0,0,0,W./C. 14263,10.5,null,S
 667,0,2,"Reginald Fenton  Butler",male,25.0,0,0,234686,13.0,null,S
@@ -146,39 +84,25 @@
 235,0,2,"Robert William Norman  Leyson",male,24.0,0,0,C.A. 29566,10.5,null,S
 309,0,2,"Samuel  Abelson",male,30.0,1,0,P/PP 3381,24.0,null,C
 715,0,2,"Samuel  Greenberg",male,52.0,0,0,250647,13.0,null,S
-875,1,2,"Samuel (Hannah Wizosky)  Abelson",female,28.0,1,0,P/PP 3381,24.0,null,C
-755,1,2,"Samuel (Jane Laver)  Herman",female,48.0,1,2,220845,65.0,null,S
 135,0,2,"Samuel James Hayden  Sobey",male,25.0,0,0,C.A. 29178,13.0,null,S
 406,0,2,"Shadrach  Gale",male,34.0,1,0,28664,21.0,null,S
-438,1,2,"Sidney (Emily Hocking)  Richards",female,24.0,2,3,29106,18.75,null,S
 218,0,2,"Sidney Samuel  Jacobsohn",male,42.0,1,0,243847,27.0,null,S
-601,1,2,"Sidney Samuel (Amy Frances Christy)  Jacobsohn",female,24.0,2,1,243847,27.0,null,S
-44,1,2,"Simonne Marie Anne Andree  Laroche",female,3.0,1,2,SC/Paris 2123,41.5792,null,C
 100,0,2,"Sinai  Kantor",male,34.0,1,0,244367,26.0,null,S
-317,1,2,"Sinai (Miriam Sternin)  Kantor",female,24.0,1,0,244367,26.0,null,S
 121,0,2,"Stanley George  Hickman",male,21.0,2,0,S.O.C. 14879,73.5,null,S
 345,0,2,"Stanley Hubert  Fox",male,36.0,0,0,229236,13.0,null,S
 237,0,2,"Stephen  Hold",male,44.0,1,0,26707,26.0,null,S
 71,0,2,"Stephen Curnow  Jenkin",male,32.0,0,0,C.A. 33111,10.5,null,S
-124,1,2,"Susan  Webber",female,32.5,0,0,27267,13.0,E101,S
 842,0,2,"Thomas Charles  Mudd",male,16.0,0,0,S.O./P.P. 3,10.5,null,S
 150,0,2,"Thomas Roussel Davids  Byles",male,42.0,0,0,244310,13.0,null,S
 685,0,2,"Thomas William Solomon  Brown",male,60.0,1,1,29750,39.0,null,S
-671,1,2,"Thomas William Solomon (Elizabeth Catherine Ford)  Brown",female,40.0,1,1,29750,39.0,null,S
 756,1,2,"Viljo  Hamalainen",male,1.0,1,1,250649,14.5,null,S
 220,0,2,"Walter  Harris",male,30.0,0,0,W/C 14208,10.5,null,S
 467,0,2,"William  Campbell",male,null,0,0,239853,0.0,null,S
 192,0,2,"William  Carbines",male,19.0,0,0,28424,13.0,null,S
-313,0,2,"William (Anna Sylfven)  Lahtinen",female,26.0,1,1,250651,26.0,null,S
-248,1,2,"William (Anna)  Hamalainen",female,24.0,0,2,250649,14.5,null,S
-881,1,2,"William (Imanita Parrish Hall)  Shelley",female,25.0,0,1,230433,26.0,null,S
-519,1,2,"William A (Florence Mary Agnes Hughes)  Angle",female,36.0,1,0,226875,26.0,null,S
-400,1,2,"William H (Jessie L)  Trout",female,28.0,0,0,240929,12.65,null,S
 723,0,2,"William Henry  Gillespie",male,34.0,0,0,12233,13.0,null,S
 583,0,2,"William James  Downton",male,54.0,0,0,28403,26.0,null,S
 734,0,2,"William John  Berriman",male,23.0,0,0,28425,13.0,null,S
 419,0,2,"William John  Matthews",male,30.0,0,0,28228,13.0,null,S
 227,1,2,"William John  Mellors",male,19.0,0,0,SW/PP 751,10.5,null,S
 118,0,2,"William John Robert  Turpin",male,29.0,1,0,11668,21.0,null,S
-42,0,2,"William John Robert (Dorothy Ann Wonnacott)  Turpin",female,27.0,1,0,11668,21.0,null,S
 408,1,2,"William Rowe  Richards",male,3.0,1,1,29106,18.75,null,S

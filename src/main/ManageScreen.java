@@ -2,6 +2,7 @@ package main;
 
 import entities.Name;
 import entities.Passenger;
+import helpclass.Generic;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -251,6 +252,8 @@ public class ManageScreen extends JPanel {
     private void performDataGrouping(){
         Map<String, Float> dataGroupMap = new HashMap<>();
         String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
+        float percentage = 0.0f;
+
 
         if (selectedClass.equals(TEXT_24)) {
             Map<Integer, Integer> classCountMap = new HashMap<>();
@@ -260,9 +263,181 @@ public class ManageScreen extends JPanel {
             }
 
             for (Map.Entry<Integer, Integer> entry : classCountMap.entrySet()) {
-                float percentage = (float) entry.getValue() / passengerList.size() * 100;
+                percentage = percentage(entry.getValue());
                 dataGroupMap.put("|" + entry.getKey()  + "|", percentage);
             }
+        }
+
+        if (selectedClass.equals(TEXT_3)) {
+            Generic<String, Integer> genericSexCount = new Generic<>();
+
+            for (Passenger passenger : passengerList) {
+               genericSexCount.put(passenger.getSex(),genericSexCount.getGenericMap().getOrDefault(passenger.getSex(),0) + 1);
+            }
+
+            for (Map.Entry<String, Integer> entry : genericSexCount.getGenericMap().entrySet()) {
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_4)){
+            Generic<String,Integer> genericEmbarkedCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericEmbarkedCount.put(passenger.getEmbarked(),genericEmbarkedCount.getGenericMap().getOrDefault(passenger.getEmbarked(), 0) + 1);
+            }
+
+            for (Map.Entry<String,Integer> entry : genericEmbarkedCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_8)){
+            Generic<Integer,Integer> genericSibSpCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericSibSpCount.put(passenger.getSibSp(),genericSibSpCount.getGenericMap().getOrDefault(passenger.getSibSp(),0) + 1);
+            }
+
+            for (Map.Entry<Integer,Integer> entry : genericSibSpCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_25)){
+            Generic<String,Integer> genericSurvivedCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericSurvivedCount.put(passenger.getSurvivedString(),genericSurvivedCount.getGenericMap().getOrDefault(passenger.getSurvivedString(),0) + 1);
+            }
+
+            for (Map.Entry<String,Integer> entry : genericSurvivedCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put(entry.getKey(),percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_9)){
+            Generic<Integer,Integer> genericParchCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericParchCount.put(passenger.getParch(),genericParchCount.getGenericMap().getOrDefault(passenger.getParch(),0) + 1);
+            }
+
+            for (Map.Entry<Integer,Integer> entry : genericParchCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_26)){
+            Generic<Double,Integer> genericAgeCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericAgeCount.put(passenger.getAge(),genericAgeCount.getGenericMap().getOrDefault(passenger.getAge(),0) + 1);
+            }
+
+            for (Map.Entry<Double,Integer> entry : genericAgeCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);
+            }
+        }
+
+
+
+        Map<String, Float> sortedDataGroupMap = dataGroupMap.entrySet().stream()
+                .sorted(Map.Entry.<String, Float>comparingByValue().reversed())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+
+        StringBuilder resultText = new StringBuilder(TOTAL).append(N);
+        for (Map.Entry<String, Float> entry : sortedDataGroupMap.entrySet()) {
+            resultText.append(entry.getKey()).append(" ").append(entry.getValue()).append("% " + N);
+        }
+
+        /**
+         * print to console
+         */
+        System.out.println(resultText);
+        /**
+         * print to GUI
+         */
+        resultDataGroupLabel.setText(resultText.toString());
+        /**
+         * show result on the screen
+         */
+        JOptionPane.showMessageDialog(null,resultText);
+    }
+
+    private float percentage (int value){
+        return (float) value / passengerList.size() * 100;
+    }
+
+    private void check(){
+        Map<String, Float> dataGroupMap = new HashMap<>();
+
+
+        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
+        int count1 = 0, count2 = 0, count3 = 0, size = passengerList.size();
+
+        if (selectedClass.equals(TEXT_24)){
+            for (Passenger passenger : passengerList){
+                if (passenger.getPClass() == 1){count1++;}
+                else if (passenger.getPClass() == 2) {count2++;}
+                else if (passenger.getPClass() == 3) {count3++;}
+            }
+            float avg1 = (float) count1 / size * 100;
+            float avg2 = (float) count2 / size * 100;
+            float avg3 = (float) count3 / size * 100;
+
+            dataGroupMap.put("1st:",avg1);
+            dataGroupMap.put("2nd:",avg2);
+            dataGroupMap.put("3rd:",avg3);
+        }
+
+        resultDataGroupLabel.setText(TOTAL);
+        for (Map.Entry<String,Float> m : dataGroupMap.entrySet()){
+            resultDataGroupLabel.setText(m.getKey() + " " + m.getValue());
+        }
+
+    }
+    private void check2(){
+        Map<String, Float> dataGroupMap = new HashMap<>();
+        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
+        float percentage = 0.0f;
+        int size = passengerList.size();
+
+        if (selectedClass.equals(TEXT_24)) {
+            Map<Integer, Integer> classCountMap = new HashMap<>();
+
+            for (Passenger passenger : passengerList) {
+                classCountMap.put(passenger.getPClass(), classCountMap.getOrDefault(passenger.getPClass(), 0) + 1);
+            }
+
+            for (Map.Entry<Integer, Integer> entry : classCountMap.entrySet()) {
+                percentage = (float) entry.getValue() / size * 100;
+                dataGroupMap.put("|" + entry.getKey()  + "|", percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_3)){
+            Map<String,Integer> classCountMap = new HashMap<>();
+
+            for (Passenger passenger : passengerList){
+                classCountMap.put(passenger.getSex(),classCountMap.getOrDefault(passenger.getSex(),0) +1 );
+            }
+
+            for (Map.Entry<String, Integer> entry : classCountMap.entrySet()){
+                percentage = (float) entry.getValue() / size * 100;
+                dataGroupMap.put("|" + entry.getKey() + "|",percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_4)){
+
         }
 
         /**
@@ -302,36 +477,6 @@ public class ManageScreen extends JPanel {
          */
         resultDataGroupLabel.setText(resultText.toString());
     }
-
-    private void check(){
-        Map<String, Float> dataGroupMap = new HashMap<>();
-
-
-        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
-        int count1 = 0, count2 = 0, count3 = 0, size = passengerList.size();
-
-        if (selectedClass.equals(TEXT_24)){
-            for (Passenger passenger : passengerList){
-                if (passenger.getPClass() == 1){count1++;}
-                else if (passenger.getPClass() == 2) {count2++;}
-                else if (passenger.getPClass() == 3) {count3++;}
-            }
-            float avg1 = (float) count1 / size * 100;
-            float avg2 = (float) count2 / size * 100;
-            float avg3 = (float) count3 / size * 100;
-
-            dataGroupMap.put("1st:",avg1);
-            dataGroupMap.put("2nd:",avg2);
-            dataGroupMap.put("3rd:",avg3);
-        }
-
-        resultDataGroupLabel.setText(TOTAL);
-        for (Map.Entry<String,Float> m : dataGroupMap.entrySet()){
-            resultDataGroupLabel.setText(m.getKey() + " " + m.getValue());
-        }
-
-    }
-
 
     private void performFiltering() throws IOException {
         List<Passenger> filteredList = passengerList;

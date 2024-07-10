@@ -2,6 +2,8 @@ package entities;
 
 import java.util.Comparator;
 
+import static utils.Constants.Text.TEXT_25;
+
 public class Passenger implements Comparator<Passenger> {
     private int passengerID;
     private int survived;
@@ -39,6 +41,13 @@ public class Passenger implements Comparator<Passenger> {
 
     public int getSurvived() {
         return survived;
+    }
+
+    public String getSurvivedString(){
+        if (isSurvived()){
+            return TEXT_25;
+        }
+        return "Not " + TEXT_25;
     }
     public boolean isSurvived(){
         if (getSurvived() == 1){

@@ -46,6 +46,8 @@ public class Constants {
         public static final String TEXT_22 = "Data Grouping: ";
         public static final String TEXT_23 = "Select";
         public static final String TEXT_24 = "Pclass";
+        public static final String TEXT_25 = "Survived";
+        public static final String TEXT_26 = "Age";
         public static final String TOTAL = "Total: ";
         public static final String NULL = "null";
         public static final String N_0 = "0";
@@ -63,6 +65,7 @@ public class Constants {
         public static final String[] PASSENGER_CLASS_OPTIONS = { TEXT_17, "1", "2", "3"};
         public static final String[] PASSENGER_SEX_OPTIONS = { TEXT_17, MALE, FEMALE};
         public static final String[] PASSENGER_EMBARKED_OPTIONS = { TEXT_17, C, Q, S};
-        public static final String[] PASSENGER_DATA_GROUPING = {TEXT_23,TEXT_24,TEXT_3,TEXT_4,TEXT_7,TEXT_8,TEXT_9,TEXT_12,TEXT_13};
+        public static final String[] PASSENGER_DATA_GROUPING =
+                {TEXT_23,TEXT_24,TEXT_25,TEXT_3,TEXT_4,TEXT_8,TEXT_9,TEXT_26};
     }
 }
