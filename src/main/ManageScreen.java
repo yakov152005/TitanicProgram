@@ -1,22 +1,36 @@
 package main;
 
+import audio.Music;
 import entities.Name;
 import entities.Passenger;
 import helpclass.Generic;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static utils.Constants.Files.*;
+import static utils.Constants.FontForManage.MY_FONT;
+import static utils.Constants.FontForManage.MY_FONT_2;
+import static utils.Constants.Images.PATH_TO_IMAGE_1;
+import static utils.Constants.Images.PATH_TO_IMAGE_2;
 import static utils.Constants.ManageScreen.*;
 import static utils.Constants.Text.*;
 
 public class ManageScreen extends JPanel {
     private static final AtomicInteger csvCounter = new AtomicInteger();
+
+    private BufferedImage backGround;
+
+    private Music music;
 
     private final JComboBox<String> classComboBox;
     private final JComboBox<String> sexComboBox;
@@ -48,13 +62,24 @@ public class ManageScreen extends JPanel {
 
     public ManageScreen(int x, int y, int width, int height) {
         this.passengerList = new ArrayList<>();
+
+
+
         this.setLayout(null);
         this.setBounds(x, y + MARGIN_FROM_TOP, width, height);
+        this.setFocusable(true);
+        this.requestFocus(true);
 
+        this.music = new Music();
+        this.music.loop();
+
+        drawBackGroundImg();
         loadPassengerData();
         System.out.println(titleLine);
 
         JLabel classLabel = new JLabel(TEXT_2);
+        classLabel.setFont(MY_FONT);
+        classLabel.setForeground(Color.GREEN);
         classLabel.setBounds(x + MARGIN_FROM_LEFT, y, LABEL_WIDTH, LABEL_HEIGHT);
         this.add(classLabel);
 
@@ -62,7 +87,9 @@ public class ManageScreen extends JPanel {
         this.classComboBox.setBounds(classLabel.getX() + classLabel.getWidth() + 1, classLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.classComboBox);
 
-        JLabel sexLabel = new JLabel(TEXT_3);
+        JLabel sexLabel = new JLabel(TEXT_3 + TEXT_27);
+        sexLabel.setFont(MY_FONT);
+        sexLabel.setForeground(Color.GREEN);
         sexLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_LEFT * 2), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(sexLabel);
 
@@ -70,7 +97,9 @@ public class ManageScreen extends JPanel {
         this.sexComboBox.setBounds(sexLabel.getX() + sexLabel.getWidth() + 1, sexLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.sexComboBox);
 
-        JLabel embarkedLabel = new JLabel(TEXT_4);
+        JLabel embarkedLabel = new JLabel(TEXT_4 + TEXT_27);
+        embarkedLabel.setFont(MY_FONT);
+        embarkedLabel.setForeground(Color.GREEN);
         embarkedLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_LEFT * 4), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(embarkedLabel);
 
@@ -79,6 +108,8 @@ public class ManageScreen extends JPanel {
         this.add(this.embarkedComboBox);
 
         JLabel minPassengerIdLabel = new JLabel(TEXT_5);
+        minPassengerIdLabel.setFont(MY_FONT);
+        minPassengerIdLabel.setForeground(Color.GREEN);
         minPassengerIdLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_LEFT * 6), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(minPassengerIdLabel);
 
@@ -87,6 +118,8 @@ public class ManageScreen extends JPanel {
         this.add(this.minPassengerIdField);
 
         JLabel maxPassengerIdLabel = new JLabel(TEXT_6);
+        maxPassengerIdLabel.setFont(MY_FONT);
+        maxPassengerIdLabel.setForeground(Color.GREEN);
         maxPassengerIdLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_LEFT * 8), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(maxPassengerIdLabel);
 
@@ -94,7 +127,9 @@ public class ManageScreen extends JPanel {
         this.maxPassengerIdField.setBounds(maxPassengerIdLabel.getX() + maxPassengerIdLabel.getWidth() + 1, maxPassengerIdLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.maxPassengerIdField);
 
-        JLabel nameLabel = new JLabel(TEXT_7);
+        JLabel nameLabel = new JLabel(TEXT_7 + TEXT_27);
+        nameLabel.setFont(MY_FONT);
+        nameLabel.setForeground(Color.GREEN);
         nameLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_LEFT * 10), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(nameLabel);
 
@@ -102,7 +137,9 @@ public class ManageScreen extends JPanel {
         this.nameField.setBounds(nameLabel.getX() + nameLabel.getWidth() + 1, nameLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.nameField);
 
-        JLabel sibSpLabel = new JLabel(TEXT_8);
+        JLabel sibSpLabel = new JLabel(TEXT_8 + TEXT_27);
+        sibSpLabel.setFont(MY_FONT);
+        sibSpLabel.setForeground(Color.GREEN);
         sibSpLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_LEFT * 12), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(sibSpLabel);
 
@@ -110,7 +147,9 @@ public class ManageScreen extends JPanel {
         this.sibSpField.setBounds(sibSpLabel.getX() + sibSpLabel.getWidth() + 1, sibSpLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.sibSpField);
 
-        JLabel parchLabel = new JLabel(TEXT_9);
+        JLabel parchLabel = new JLabel(TEXT_9 + TEXT_27);
+        parchLabel.setFont(MY_FONT);
+        parchLabel.setForeground(Color.GREEN);
         parchLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_LEFT * 14), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(parchLabel);
 
@@ -119,6 +158,8 @@ public class ManageScreen extends JPanel {
         this.add(this.parchField);
 
         JLabel ticketLabel = new JLabel(TEXT_10);
+        ticketLabel.setFont(MY_FONT);
+        ticketLabel.setForeground(Color.GREEN);
         ticketLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_LEFT * 16), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(ticketLabel);
 
@@ -127,6 +168,8 @@ public class ManageScreen extends JPanel {
         this.add(this.ticketField);
 
         JLabel minFareLabel = new JLabel(TEXT_11);
+        minFareLabel.setFont(MY_FONT);
+        minFareLabel.setForeground(Color.GREEN);
         minFareLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_RIGHT - 120), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(minFareLabel);
 
@@ -135,6 +178,8 @@ public class ManageScreen extends JPanel {
         this.add(this.minFareField);
 
         JLabel maxFareLabel = new JLabel(TEXT_12);
+        maxFareLabel.setFont(MY_FONT);
+        maxFareLabel.setForeground(Color.GREEN);
         maxFareLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_RIGHT - 80), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(maxFareLabel);
 
@@ -143,6 +188,8 @@ public class ManageScreen extends JPanel {
         this.add(this.maxFareField);
 
         JLabel cabinLabel = new JLabel(TEXT_13);
+        cabinLabel.setFont(MY_FONT);
+        cabinLabel.setForeground(Color.GREEN);
         cabinLabel.setBounds(x + MARGIN_FROM_LEFT, y + (MARGIN_FROM_RIGHT - 40), LABEL_WIDTH, LABEL_HEIGHT);
         this.add(cabinLabel);
 
@@ -163,6 +210,8 @@ public class ManageScreen extends JPanel {
         this.add(exitButton);
 
         this.forDataGroupLabel = new JLabel(TEXT_22);
+        this.forDataGroupLabel.setFont(MY_FONT);
+        this.forDataGroupLabel.setForeground(Color.GREEN);
         this.forDataGroupLabel.setBounds(x + MARGIN_FROM_LEFT, y + MARGIN_FROM_RIGHT + DEF_1 * 2, LABEL_WIDTH, LABEL_HEIGHT);
         this.add(forDataGroupLabel);
 
@@ -189,15 +238,16 @@ public class ManageScreen extends JPanel {
             }
         });
 
-        this.crateStatisticFileButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        this.crateStatisticFileButton.addActionListener(e -> {
+            try {
+                performStatisticFileTxt();
+            } catch (IOException ex) {throw new RuntimeException(ex);}
+            this.crateStatisticFileButton.setText(TEXT_28);
+            this.crateStatisticFileButton.addActionListener(e1 -> {
                 try {
-                    performStatisticFileTxt();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
+                    Desktop.getDesktop().open(new File(FULL_PATH_OF_STATISTIC));
+                }catch (IOException ex){throw new RuntimeException(ex);}
+            });
         });
 
         this.dataGroupingComboBox.addActionListener(new ActionListener() {
@@ -249,234 +299,7 @@ public class ManageScreen extends JPanel {
         } catch (Exception e) {System.out.println(e.getMessage());}
     }
 
-    private void performDataGrouping(){
-        Map<String, Float> dataGroupMap = new HashMap<>();
-        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
-        float percentage = 0.0f;
 
-
-        if (selectedClass.equals(TEXT_24)) {
-            Map<Integer, Integer> classCountMap = new HashMap<>();
-
-            for (Passenger passenger : passengerList) {
-                classCountMap.put(passenger.getPClass(), classCountMap.getOrDefault(passenger.getPClass(), 0) + 1);
-            }
-
-            for (Map.Entry<Integer, Integer> entry : classCountMap.entrySet()) {
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey()  + "|", percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_3)) {
-            Generic<String, Integer> genericSexCount = new Generic<>();
-
-            for (Passenger passenger : passengerList) {
-               genericSexCount.put(passenger.getSex(),genericSexCount.getGenericMap().getOrDefault(passenger.getSex(),0) + 1);
-            }
-
-            for (Map.Entry<String, Integer> entry : genericSexCount.getGenericMap().entrySet()) {
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_4)){
-            Generic<String,Integer> genericEmbarkedCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericEmbarkedCount.put(passenger.getEmbarked(),genericEmbarkedCount.getGenericMap().getOrDefault(passenger.getEmbarked(), 0) + 1);
-            }
-
-            for (Map.Entry<String,Integer> entry : genericEmbarkedCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_8)){
-            Generic<Integer,Integer> genericSibSpCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericSibSpCount.put(passenger.getSibSp(),genericSibSpCount.getGenericMap().getOrDefault(passenger.getSibSp(),0) + 1);
-            }
-
-            for (Map.Entry<Integer,Integer> entry : genericSibSpCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_25)){
-            Generic<String,Integer> genericSurvivedCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericSurvivedCount.put(passenger.getSurvivedString(),genericSurvivedCount.getGenericMap().getOrDefault(passenger.getSurvivedString(),0) + 1);
-            }
-
-            for (Map.Entry<String,Integer> entry : genericSurvivedCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put(entry.getKey(),percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_9)){
-            Generic<Integer,Integer> genericParchCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericParchCount.put(passenger.getParch(),genericParchCount.getGenericMap().getOrDefault(passenger.getParch(),0) + 1);
-            }
-
-            for (Map.Entry<Integer,Integer> entry : genericParchCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_26)){
-            Generic<Double,Integer> genericAgeCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericAgeCount.put(passenger.getAge(),genericAgeCount.getGenericMap().getOrDefault(passenger.getAge(),0) + 1);
-            }
-
-            for (Map.Entry<Double,Integer> entry : genericAgeCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);
-            }
-        }
-
-
-
-        Map<String, Float> sortedDataGroupMap = dataGroupMap.entrySet().stream()
-                .sorted(Map.Entry.<String, Float>comparingByValue().reversed())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-
-
-        StringBuilder resultText = new StringBuilder(TOTAL).append(N);
-        for (Map.Entry<String, Float> entry : sortedDataGroupMap.entrySet()) {
-            resultText.append(entry.getKey()).append(" ").append(entry.getValue()).append("% " + N);
-        }
-
-        /**
-         * print to console
-         */
-        System.out.println(resultText);
-        /**
-         * print to GUI
-         */
-        resultDataGroupLabel.setText(resultText.toString());
-        /**
-         * show result on the screen
-         */
-        JOptionPane.showMessageDialog(null,resultText);
-    }
-
-    private float percentage (int value){
-        return (float) value / passengerList.size() * 100;
-    }
-
-    private void check(){
-        Map<String, Float> dataGroupMap = new HashMap<>();
-
-
-        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
-        int count1 = 0, count2 = 0, count3 = 0, size = passengerList.size();
-
-        if (selectedClass.equals(TEXT_24)){
-            for (Passenger passenger : passengerList){
-                if (passenger.getPClass() == 1){count1++;}
-                else if (passenger.getPClass() == 2) {count2++;}
-                else if (passenger.getPClass() == 3) {count3++;}
-            }
-            float avg1 = (float) count1 / size * 100;
-            float avg2 = (float) count2 / size * 100;
-            float avg3 = (float) count3 / size * 100;
-
-            dataGroupMap.put("1st:",avg1);
-            dataGroupMap.put("2nd:",avg2);
-            dataGroupMap.put("3rd:",avg3);
-        }
-
-        resultDataGroupLabel.setText(TOTAL);
-        for (Map.Entry<String,Float> m : dataGroupMap.entrySet()){
-            resultDataGroupLabel.setText(m.getKey() + " " + m.getValue());
-        }
-
-    }
-    private void check2(){
-        Map<String, Float> dataGroupMap = new HashMap<>();
-        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
-        float percentage = 0.0f;
-        int size = passengerList.size();
-
-        if (selectedClass.equals(TEXT_24)) {
-            Map<Integer, Integer> classCountMap = new HashMap<>();
-
-            for (Passenger passenger : passengerList) {
-                classCountMap.put(passenger.getPClass(), classCountMap.getOrDefault(passenger.getPClass(), 0) + 1);
-            }
-
-            for (Map.Entry<Integer, Integer> entry : classCountMap.entrySet()) {
-                percentage = (float) entry.getValue() / size * 100;
-                dataGroupMap.put("|" + entry.getKey()  + "|", percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_3)){
-            Map<String,Integer> classCountMap = new HashMap<>();
-
-            for (Passenger passenger : passengerList){
-                classCountMap.put(passenger.getSex(),classCountMap.getOrDefault(passenger.getSex(),0) +1 );
-            }
-
-            for (Map.Entry<String, Integer> entry : classCountMap.entrySet()){
-                percentage = (float) entry.getValue() / size * 100;
-                dataGroupMap.put("|" + entry.getKey() + "|",percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_4)){
-
-        }
-
-        /**
-         * add method for all option
-         */
-
-
-
-
-
-
-
-
-        /**
-         * ****************************
-         */
-
-        /**
-         * this map sorted for all options dont forget to creat a temp map for every option and change temp to sorted map
-         */
-        Map<String, Float> sortedDataGroupMap = dataGroupMap.entrySet().stream()
-                .sorted(Map.Entry.<String, Float>comparingByValue().reversed())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
-
-
-        StringBuilder resultText = new StringBuilder(TOTAL).append(N);
-        for (Map.Entry<String, Float> entry : sortedDataGroupMap.entrySet()) {
-            resultText.append(entry.getKey()).append(" ").append(entry.getValue()).append("% " + N);
-        }
-
-        /**
-         * print to console
-         */
-        System.out.println(resultText);
-        /**
-         * print to GUI
-         */
-        resultDataGroupLabel.setText(resultText.toString());
-    }
 
     private void performFiltering() throws IOException {
         List<Passenger> filteredList = passengerList;
@@ -608,6 +431,8 @@ public class ManageScreen extends JPanel {
         long survivedCount = filteredList.stream().filter(Passenger::isSurvived).count();
         long notSurvivedCount = totalPassengers - survivedCount;
 
+        resultFilterLabel.setFont(MY_FONT_2);
+        resultFilterLabel.setForeground(Color.GREEN);
         resultFilterLabel.setText(TOTAL + totalPassengers + ", Survived: " + survivedCount + ", Not Survived: " + notSurvivedCount);
     }
 
@@ -718,7 +543,7 @@ public class ManageScreen extends JPanel {
         float avg_Q = (float) sum_Q / count_Q * 100;
         float avg_S = (float) sum_S / count_S * 100;
 
-        FileWriter fw = new FileWriter(PATH + PATH_TO_STATISTIC);
+        FileWriter fw = new FileWriter(FULL_PATH_OF_STATISTIC);
         PrintWriter pw = new PrintWriter(fw);
 
         pw.println("אחוזי הישרדות לפי -->>");
@@ -768,6 +593,136 @@ public class ManageScreen extends JPanel {
         pw.close();
     }
 
+    private void performDataGrouping(){
+        Map<String, Float> dataGroupMap = new HashMap<>();
+        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
+        float percentage = 0.0f;
+
+
+        if (selectedClass.equals(TEXT_24)) {
+            Map<Integer, Integer> classCountMap = new HashMap<>();
+
+            for (Passenger passenger : passengerList) {
+                classCountMap.put(passenger.getPClass(), classCountMap.getOrDefault(passenger.getPClass(), 0) + 1);
+            }
+
+            for (Map.Entry<Integer, Integer> entry : classCountMap.entrySet()) {
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey()  + "|", percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_3)) {
+            Generic<String, Integer> genericSexCount = new Generic<>();
+
+            for (Passenger passenger : passengerList) {
+                genericSexCount.put(passenger.getSex(),genericSexCount.getGenericMap().getOrDefault(passenger.getSex(),0) + 1);
+            }
+
+            for (Map.Entry<String, Integer> entry : genericSexCount.getGenericMap().entrySet()) {
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_4)){
+            Generic<String,Integer> genericEmbarkedCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericEmbarkedCount.put(passenger.getEmbarked(),genericEmbarkedCount.getGenericMap().getOrDefault(passenger.getEmbarked(), 0) + 1);
+            }
+
+            for (Map.Entry<String,Integer> entry : genericEmbarkedCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_8)){
+            Generic<Integer,Integer> genericSibSpCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericSibSpCount.put(passenger.getSibSp(),genericSibSpCount.getGenericMap().getOrDefault(passenger.getSibSp(),0) + 1);
+            }
+
+            for (Map.Entry<Integer,Integer> entry : genericSibSpCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_25)){
+            Generic<String,Integer> genericSurvivedCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericSurvivedCount.put(passenger.getSurvivedString(),genericSurvivedCount.getGenericMap().getOrDefault(passenger.getSurvivedString(),0) + 1);
+            }
+
+            for (Map.Entry<String,Integer> entry : genericSurvivedCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|",percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_9)){
+            Generic<Integer,Integer> genericParchCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericParchCount.put(passenger.getParch(),genericParchCount.getGenericMap().getOrDefault(passenger.getParch(),0) + 1);
+            }
+
+            for (Map.Entry<Integer,Integer> entry : genericParchCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
+            }
+        }
+
+        if (selectedClass.equals(TEXT_26)){
+            Generic<Double,Integer> genericAgeCount = new Generic<>();
+
+            for (Passenger passenger : passengerList){
+                genericAgeCount.put(passenger.getAge(),genericAgeCount.getGenericMap().getOrDefault(passenger.getAge(),0) + 1);
+            }
+
+            for (Map.Entry<Double,Integer> entry : genericAgeCount.getGenericMap().entrySet()){
+                percentage = percentage(entry.getValue());
+                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);
+            }
+        }
+
+
+
+        Map<String, Float> sortedDataGroupMap = dataGroupMap.entrySet().stream()
+                .sorted(Map.Entry.<String, Float>comparingByValue().reversed())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+
+        StringBuilder resultText = new StringBuilder(TOTAL).append(N);
+        for (Map.Entry<String, Float> entry : sortedDataGroupMap.entrySet()) {
+            resultText.append(entry.getKey()).append(" ").append(entry.getValue()).append("% " + N);
+        }
+
+        /**
+         * print to console
+         */
+        System.out.println(resultText);
+        /**
+         * print to GUI
+         */
+        resultDataGroupLabel.setFont(MY_FONT_2);
+        resultDataGroupLabel.setForeground(Color.GREEN);
+        resultDataGroupLabel.setText(resultText.toString());
+        /**
+         * show result on the screen
+         */
+        JOptionPane.showMessageDialog(null,resultText);
+    }
+
+    private float percentage (int value){
+        return (float) value / passengerList.size() * 100;
+    }
+
+
     private void saveCsvFile(Set<Passenger> savedHashSet, String numberForFile) throws IOException {
 
         FileWriter f = new FileWriter(PATH + numberForFile);
@@ -792,7 +747,23 @@ public class ManageScreen extends JPanel {
         }
         printWriter.close();
     }
+
+    /**
+     * You can change the background image if u want
+     * change the PATH_TO_IMAGE_1
+     */
+    private void drawBackGroundImg(){
+        try {
+            this.backGround = ImageIO.read(new File(PATH_TO_IMAGE_1));
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    protected void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+        Graphics2D graphics2D = (Graphics2D) graphics;
+        graphics2D.drawImage(this.backGround,0,0,
+                WINDOW_WIDTH, WINDOW_HEIGHT, null);
+    }
 }
-
-
-
