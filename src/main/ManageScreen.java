@@ -3,7 +3,9 @@ package main;
 import audio.Music;
 import entities.Name;
 import entities.Passenger;
+import exception.ExceptionHandler;
 import helpclass.Generic;
+import userinput.KeyInputs;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -18,9 +20,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static utils.Constants.Audio.MUSIC;
+import static utils.Constants.Exceptions.ERROR_3;
 import static utils.Constants.Files.*;
 import static utils.Constants.FontForManage.*;
 import static utils.Constants.Images.PATH_TO_IMAGE_1;
+import static utils.Constants.Images.PATH_TO_IMAGE_2;
 import static utils.Constants.ManageScreen.*;
 import static utils.Constants.ReadFileCsv.*;
 import static utils.Constants.Text.*;
@@ -115,6 +119,8 @@ public class ManageScreen extends JPanel {
         this.minPassengerIdField = new JTextField();
         this.minPassengerIdField.setBounds(minPassengerIdLabel.getX() + minPassengerIdLabel.getWidth() + 1, minPassengerIdLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.minPassengerIdField);
+        this.minPassengerIdField.addKeyListener(new KeyInputs(this.minPassengerIdField ,DIGITS));
+
 
         JLabel maxPassengerIdLabel = new JLabel(TEXT_6);
         maxPassengerIdLabel.setFont(MY_FONT);
@@ -125,6 +131,7 @@ public class ManageScreen extends JPanel {
         this.maxPassengerIdField = new JTextField();
         this.maxPassengerIdField.setBounds(maxPassengerIdLabel.getX() + maxPassengerIdLabel.getWidth() + 1, maxPassengerIdLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.maxPassengerIdField);
+        this.maxPassengerIdField.addKeyListener(new KeyInputs(this.maxPassengerIdField ,DIGITS));
 
         JLabel nameLabel = new JLabel(TEXT_7 + TEXT_27);
         nameLabel.setFont(MY_FONT);
@@ -135,6 +142,7 @@ public class ManageScreen extends JPanel {
         this.nameField = new JTextField();
         this.nameField.setBounds(nameLabel.getX() + nameLabel.getWidth() + 1, nameLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.nameField);
+        this.nameField.addKeyListener(new KeyInputs(this.nameField,ONLY_LETTER));
 
         JLabel sibSpLabel = new JLabel(TEXT_8 + TEXT_27);
         sibSpLabel.setFont(MY_FONT);
@@ -145,6 +153,7 @@ public class ManageScreen extends JPanel {
         this.sibSpField = new JTextField();
         this.sibSpField.setBounds(sibSpLabel.getX() + sibSpLabel.getWidth() + 1, sibSpLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.sibSpField);
+        this.sibSpField.addKeyListener(new KeyInputs(this.sibSpField,ONLY_DIGIT));
 
         JLabel parchLabel = new JLabel(TEXT_9 + TEXT_27);
         parchLabel.setFont(MY_FONT);
@@ -155,6 +164,7 @@ public class ManageScreen extends JPanel {
         this.parchField = new JTextField();
         this.parchField.setBounds(parchLabel.getX() + parchLabel.getWidth() + 1, parchLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.parchField);
+        this.parchField.addKeyListener(new KeyInputs(this.parchField,ONLY_DIGIT));
 
         JLabel ticketLabel = new JLabel(TEXT_10);
         ticketLabel.setFont(MY_FONT);
@@ -175,6 +185,7 @@ public class ManageScreen extends JPanel {
         this.minFareField = new JTextField();
         this.minFareField.setBounds(minFareLabel.getX() + minFareLabel.getWidth() + 1, minFareLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.minFareField);
+        this.minFareField.addKeyListener(new KeyInputs(this.minFareField,DIGITS));
 
         JLabel maxFareLabel = new JLabel(TEXT_12);
         maxFareLabel.setFont(MY_FONT);
@@ -185,6 +196,7 @@ public class ManageScreen extends JPanel {
         this.maxFareField = new JTextField();
         this.maxFareField.setBounds(maxFareLabel.getX() + maxFareLabel.getWidth() + 1, maxFareLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.maxFareField);
+        this.maxFareField.addKeyListener(new KeyInputs(this.maxFareField,DIGITS));
 
         JLabel cabinLabel = new JLabel(TEXT_13);
         cabinLabel.setFont(MY_FONT);
@@ -195,6 +207,7 @@ public class ManageScreen extends JPanel {
         this.cabinField = new JTextField();
         this.cabinField.setBounds(cabinLabel.getX() + cabinLabel.getWidth() + 1, cabinLabel.getY(), COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
         this.add(this.cabinField);
+        this.cabinField.addKeyListener(new KeyInputs(this.cabinField,ONLY_DIGIT));
 
         this.forDataGroupLabel = new JLabel(TEXT_22);
         this.forDataGroupLabel.setFont(MY_FONT);
@@ -254,21 +267,20 @@ public class ManageScreen extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     performFiltering();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                } catch (IOException ex) {ExceptionHandler.handle(ex);}
             }
         });
 
         this.crateStatisticFileButton.addActionListener(e -> {
             try {
                 performStatisticFileTxt();
-            } catch (IOException ex) {throw new RuntimeException(ex);}
+            } catch (IOException ex) {ExceptionHandler.handle(ex);}
             this.crateStatisticFileButton.setText(TEXT_28);
+            System.out.println(TEXT_29);
             this.crateStatisticFileButton.addActionListener(e1 -> {
                 try {
                     Desktop.getDesktop().open(new File(FULL_PATH_OF_STATISTIC));
-                }catch (IOException ex){throw new RuntimeException(ex);}
+                }catch (IOException ex){ExceptionHandler.handle(ex);}
             });
         });
 
@@ -323,9 +335,9 @@ public class ManageScreen extends JPanel {
 
                     this.passengerList.add(passenger);
 
-                } catch (NumberFormatException e) {System.err.println(TEXT_16 + line);}
+                } catch (NumberFormatException ex) {ExceptionHandler.handleNumberFormatException(ex, line);}
             }
-        } catch (Exception e) {System.out.println(e.getMessage());}
+        } catch (Exception ex) {ExceptionHandler.handle(ex);}
 
         System.out.println(titleLine);
     }
@@ -439,9 +451,9 @@ public class ManageScreen extends JPanel {
                 SwingUtilities.invokeLater(() -> {
                     JOptionPane.showMessageDialog(null, TEXT_19);});
 
-            } catch (IOException e) {
+            } catch (IOException ex) {
                 SwingUtilities.invokeLater(() -> {
-                    JOptionPane.showMessageDialog(null, TEXT_20);});}
+                    ExceptionHandler.handleIoExceptionWithGuiMessage(ex, ERROR_3);});}
         }).start();
 
 
@@ -608,7 +620,6 @@ public class ManageScreen extends JPanel {
         pw.print("Q – קווינסטאון --> " + avg_Q + N );
         pw.print("S – סאות'המפטון --> " + avg_S + N );
 
-
         JOptionPane.showMessageDialog(null, TEXT_19);
         pw.close();
     }
@@ -706,11 +717,8 @@ public class ManageScreen extends JPanel {
 
             for (Map.Entry<Double,Integer> entry : genericAgeCount.getGenericMap().entrySet()){
                 percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);
-            }
+                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);}
         }
-
-
 
         Map<String, Float> sortedDataGroupMap = dataGroupMap.entrySet().stream()
                 .sorted(Map.Entry.<String, Float>comparingByValue().reversed())
@@ -726,12 +734,12 @@ public class ManageScreen extends JPanel {
          * print to console
          */
         System.out.println(resultText);
-        /**
-         * print to GUI
-         */
-        resultDataGroupLabel.setFont(MY_FONT_2);
-        resultDataGroupLabel.setForeground(Color.GREEN);
-        resultDataGroupLabel.setText(resultText.toString());
+//        /**
+//         * print to GUI
+//         */
+//        resultDataGroupLabel.setFont(MY_FONT_2);
+//        resultDataGroupLabel.setForeground(Color.GREEN);
+//        resultDataGroupLabel.setText(resultText.toString());
         /**
          * show result on the screen
          */
@@ -770,7 +778,7 @@ public class ManageScreen extends JPanel {
 
     /**
      * You can change the background image if u want
-     * change the PATH_TO_IMAGE_1
+     * change the PATH_TO_IMAGE_2
      */
     private void drawBackGroundImg(){
         try {

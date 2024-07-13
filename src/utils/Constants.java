@@ -26,6 +26,18 @@ public class Constants {
         public static final int RESULT_WIDTH = 300;
         public static final int RESULT_HEIGHT = 25;
         public static final int DEF_1 = 50;
+        public static final int ONLY_LETTER = 0;
+        public static final int ONLY_DIGIT = 1;
+        public static final int DIGITS = 2;
+    }
+    public static class Key{
+
+        public static final int WIDTH = 200;
+        public static final int HEIGHT = 200;
+        public static final int X = 100;
+        public static final String TEXT_KEY_1 = "Only letters, and 20 letters tops! ";
+        public static final String TEXT_KEY_2 = "Only one digit! ";
+        public static final String TEXT_KEY_3 = "Only digits, and 10 digits tops! ";
     }
 
     public static class ReadFileCsv{
@@ -62,11 +74,9 @@ public class Constants {
         public static final String TEXT_13 = "Cabin: ";
         public static final String TEXT_14 = "Filter";
         public static final String TEXT_15 = "";
-        public static final String TEXT_16 = "Error parsing line: ";
         public static final String TEXT_17 = "All";
         public static final String TEXT_18 = "Exit";
         public static final String TEXT_19 = "File saved successfully!";
-        public static final String TEXT_20 = "Failed to save file!";
         public static final String TEXT_21 = "Create statistic file";
         public static final String TEXT_22 = "Data Grouping: ";
         public static final String TEXT_23 = "Select";
@@ -75,6 +85,7 @@ public class Constants {
         public static final String TEXT_26 = "Age";
         public static final String TEXT_27 = ": ";
         public static final String TEXT_28 = "Open File";
+        public static final String TEXT_29 = "The file is exist in the data package..";
         public static final String TOTAL = "Total: ";
         public static final String NULL = "null";
         public static final String N_0 = "0";
@@ -106,7 +117,7 @@ public class Constants {
         public static final String CSV = ".csv";
         public static final String TXT = ".txt";
         public static final String PATH_TO_DATA_FILE = PATH + "titanic" + CSV;
-        public static final String PATH_TO_STATISTIC = "Statistic" + TXT;
+        public static final String PATH_TO_STATISTIC = "statistic" + TXT;
         public static final String FULL_PATH_OF_STATISTIC = PATH + PATH_TO_STATISTIC;
 
     }
@@ -122,5 +133,13 @@ public class Constants {
 
         public static final String MUSIC = "Sound";
         public static final String AUDIO_1 = "src/audio/background.wav";
+    }
+
+    public static class Exceptions{
+
+        public static final String ERROR_1 = "An error occurred: ";
+        public static final String ERROR_2 = "Error parsing line: ";
+        public static final String ERROR_3 = "Failed to save file.. ";
+        public static final String ERROR_4 = "Failed to load audio..";
     }
 }

@@ -1,10 +1,13 @@
 package audio;
 
+import exception.ExceptionHandler;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
 import static utils.Constants.Audio.AUDIO_1;
+import static utils.Constants.Exceptions.ERROR_4;
 
 public class Music {
     private Clip clip;
@@ -22,8 +25,8 @@ public class Music {
             clip.open(this.music);
             loop();
             clip.start();
-        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
+        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
+            ExceptionHandler.handleIoExceptionWithGuiMessage(ex,ERROR_4);
         }
     }
 
