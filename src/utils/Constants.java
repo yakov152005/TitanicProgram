@@ -28,6 +28,23 @@ public class Constants {
         public static final int DEF_1 = 50;
     }
 
+    public static class ReadFileCsv{
+
+        public static final int P_D = 0;
+        public static final int S_V = 1;
+        public static final int P_C = 2;
+        public static final int N_1 = 3;
+        public static final int N_2 = 4;
+        public static final int S_X = 5;
+        public static final int A_E = 6;
+        public static final int S_P = 7;
+        public static final int P_H = 8;
+        public static final int T_T = 9;
+        public static final int F_E = 10;
+        public static final int C_N = 11;
+        public static final int E_D = 12;
+    }
+
     public static class Text{
 
         public static final String TEXT_1 = "Titanic Passengers Data";
@@ -71,7 +88,7 @@ public class Constants {
         public static final String[] PASSENGER_SEX_OPTIONS = { TEXT_17, MALE, FEMALE};
         public static final String[] PASSENGER_EMBARKED_OPTIONS = { TEXT_17, C, Q, S};
         public static final String[] PASSENGER_DATA_GROUPING =
-                {TEXT_23,TEXT_26,TEXT_24,TEXT_25,TEXT_3,TEXT_4,TEXT_8,TEXT_9,TEXT_26};
+                {TEXT_23,TEXT_24,TEXT_25,TEXT_3,TEXT_4,TEXT_8,TEXT_9,TEXT_26};
 
     }
 
@@ -98,5 +115,12 @@ public class Constants {
 
         public static final Font MY_FONT = new Font("Ink Free", Font.BOLD, 15);
         public static final Font MY_FONT_2 = new Font("Free style",Font.BOLD,13);
+        public static final Font MY_FONT_3 = new Font("Calibri", Font.ITALIC ,50);
+    }
+
+    public static class Audio{
+
+        public static final String MUSIC = "Sound";
+        public static final String AUDIO_1 = "src/audio/background.wav";
     }
 }
