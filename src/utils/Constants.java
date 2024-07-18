@@ -6,6 +6,7 @@ public class Constants {
 
     public static class TitanicWindow{
 
+        public static final String TITLE_PROJECT = "The Titanic Project";
         public static final int WINDOW_WIDTH_CENTER = 800;
         public static final int WINDOW_HEIGHT_CENTER = 100;
     }
@@ -95,7 +96,10 @@ public class Constants {
         public static final String C = "C";
         public static final String Q = "Q";
         public static final String S = "S";
-        public static final String[] PASSENGER_CLASS_OPTIONS = { TEXT_17, "1", "2", "3"};
+        public static final int ST_1 = 1;
+        public static final int ND_2 = 2;
+        public static final int RD_3 = 3;
+        public static final String[] PASSENGER_CLASS_OPTIONS = { TEXT_17, String.valueOf(ST_1), String.valueOf(ND_2), String.valueOf(RD_3)};
         public static final String[] PASSENGER_SEX_OPTIONS = { TEXT_17, MALE, FEMALE};
         public static final String[] PASSENGER_EMBARKED_OPTIONS = { TEXT_17, C, Q, S};
         public static final String[] PASSENGER_DATA_GROUPING =
@@ -141,5 +145,37 @@ public class Constants {
         public static final String ERROR_2 = "Error parsing line: ";
         public static final String ERROR_3 = "Failed to save file.. ";
         public static final String ERROR_4 = "Failed to load audio..";
+        public static final String ERROR_5 = "Invalid grouping option: ";
+        public static final String ERROR_6 = "Invalid class selected";
+    }
+
+    public enum GroupingOption{
+
+        PCLASS("Pclass"),
+        SEX("Sex"),
+        EMBARKED("Embarked"),
+        SIBSP("SibSp"),
+        PARCH("Parch"),
+        SURVIVED("Survived"),
+        AGE("Age");
+
+        private final String text;
+
+        GroupingOption(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public static GroupingOption fromText(String text) {
+            for (GroupingOption option : GroupingOption.values()) {
+                if (option.getText().equalsIgnoreCase(text)) {
+                    return option;
+                }
+            }
+            throw new IllegalArgumentException( Exceptions.ERROR_5+ text);
+        }
     }
 }

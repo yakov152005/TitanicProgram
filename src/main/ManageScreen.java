@@ -6,6 +6,7 @@ import entities.Passenger;
 import exception.ExceptionHandler;
 import helpclass.Generic;
 import userinput.KeyInputs;
+import utils.Constants;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -17,10 +18,12 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static utils.Constants.Audio.MUSIC;
 import static utils.Constants.Exceptions.ERROR_3;
+import static utils.Constants.Exceptions.ERROR_6;
 import static utils.Constants.Files.*;
 import static utils.Constants.FontForManage.*;
 import static utils.Constants.Images.PATH_TO_IMAGE_1;
@@ -28,6 +31,7 @@ import static utils.Constants.Images.PATH_TO_IMAGE_2;
 import static utils.Constants.ManageScreen.*;
 import static utils.Constants.ReadFileCsv.*;
 import static utils.Constants.Text.*;
+import static utils.Constants.TitanicWindow.TITLE_PROJECT;
 
 public class ManageScreen extends JPanel {
     private static final AtomicInteger csvCounter = new AtomicInteger();
@@ -82,7 +86,7 @@ public class ManageScreen extends JPanel {
     }
 
     private void createTitle(){
-        JLabel heading=new JLabel("The Titanic Project");
+        JLabel heading=new JLabel(TITLE_PROJECT);
         heading.setBounds(245,685,WINDOW_WIDTH / 2, 100);
         heading.setFont(MY_FONT_3);
         heading.setForeground(Color.white);
@@ -471,280 +475,197 @@ public class ManageScreen extends JPanel {
     private void performStatisticFileTxt() throws IOException {
         List<Passenger> statisticList = passengerList;
 
-        int count1st = 0, count2nd = 0, count3rd = 0,
-                countMale = 0, countFemale = 0,
-                count10 = 0, count20 = 0, count30 = 0, count40 = 0, count50 = 0, count51PP = 0
-                ,countWithClose = 0, countWithoutClose = 0
-                ,countCostTicket_10 = 0, countCostTicket_30 = 0, countCostTicket_31PP = 0
-                ,count_C = 0, count_Q = 0, count_S = 0;
+        Generic<Integer, Integer> classCount = new Generic<>();
+        Generic<String, Integer> genderCount = new Generic<>();
+        Generic<Integer, Integer> ageGroupCount = new Generic<>();
+        Generic<Boolean, Integer> closeRelativesCount = new Generic<>();
+        Generic<Integer, Integer> fareGroupCount = new Generic<>();
+        Generic<String, Integer> embarkedCount = new Generic<>();
 
-        int sumSurvived1st = 0, sumSurvived2nd = 0, sumSurvived3rd = 0,
-                sumMale = 0, sumFemale = 0 ,
-                sum10 = 0, sum20 = 0, sum30 = 0, sum40 = 0, sum50 = 0, sum51PP = 0
-                ,sumWithClose = 0, sumWithoutClose = 0
-                ,sumCostTicket_10 = 0, sumCostTicket_30 = 0, sumCostTicket_31PP = 0
-                ,sum_C = 0, sum_Q = 0, sum_S = 0;;
+        Generic<Integer, Integer> survivedClassCount = new Generic<>();
+        Generic<String, Integer> survivedGenderCount = new Generic<>();
+        Generic<Integer, Integer> survivedAgeGroupCount = new Generic<>();
+        Generic<Boolean, Integer> survivedCloseRelativesCount = new Generic<>();
+        Generic<Integer, Integer> survivedFareGroupCount = new Generic<>();
+        Generic<String, Integer> survivedEmbarkedCount = new Generic<>();
 
+        for (Passenger passenger : statisticList) {
+            incrementCount(classCount, passenger.getPClass());
+            incrementCount(genderCount, passenger.getSex());
+            incrementCount(ageGroupCount, getAgeGroup(passenger.getAge()));
+            incrementCount(closeRelativesCount, hasCloseRelatives(passenger));
+            incrementCount(fareGroupCount, getFareGroup(passenger.getFare()));
+            incrementCount(embarkedCount, passenger.getEmbarked());
 
-        for (Passenger passenger : statisticList){
-
-            if (passenger.getPClass() == 1){count1st++;}
-            else if (passenger.getPClass() == 2) {count2nd++;}
-            else if (passenger.getPClass() == 3){count3rd++;}
-
-            if (passenger.getSex().equalsIgnoreCase(MALE)){countMale++;}
-            else if (passenger.getSex().equalsIgnoreCase(FEMALE)) {countFemale++;}
-
-            try {
-                if (passenger.getAge() <= 10){count10++;}
-                else if (passenger.getAge() > 10 && passenger.getAge() <= 20) {count20++;}
-                else if (passenger.getAge() > 20 && passenger.getAge() <= 30) {count30++;}
-                else if (passenger.getAge() > 30 && passenger.getAge() <= 40) {count40++;}
-                else if (passenger.getAge() > 40 && passenger.getAge() <= 50) {count50++;}
-                else if (passenger.getAge() > 50) {count51PP++;}
-            }catch (NullPointerException e){}
-
-            if (passenger.getParch() >= 1 || passenger.getSibSp() >= 1){countWithClose++;}
-            else if (passenger.getParch() == 0 && passenger.getSibSp() == 0){countWithoutClose++;}
-
-            if (passenger.getFare() <= 10){countCostTicket_10++;}
-            else if (passenger.getFare() > 10 && passenger.getFare() <= 30){countCostTicket_30++;}
-            else if (passenger.getFare() > 30) {countCostTicket_31PP++;}
-
-            if (passenger.getEmbarked().equalsIgnoreCase(C)){count_C++;}
-            else if (passenger.getEmbarked().equalsIgnoreCase(Q)){count_Q++;}
-            else if (passenger.getEmbarked().equalsIgnoreCase(S)){count_S++;}
-        }
-
-        for (Passenger passenger : statisticList){
             if (passenger.isSurvived()) {
-
-                if (passenger.getPClass() == 1){sumSurvived1st++;}
-                else if (passenger.getPClass() == 2){sumSurvived2nd++;}
-                else if (passenger.getPClass() == 3){sumSurvived3rd++;}
-
-                if (passenger.getSex().equalsIgnoreCase(MALE)){sumMale++;}
-                else if (passenger.getSex().equalsIgnoreCase(FEMALE)){sumFemale++;}
-
-                try {
-                    if (passenger.getAge() <= 10){sum10++;}
-                    else if (passenger.getAge() > 10 && passenger.getAge() <= 20) {sum20++;}
-                    else if (passenger.getAge() > 20 && passenger.getAge() <= 30) {sum30++;}
-                    else if (passenger.getAge() > 30 && passenger.getAge() <= 40) {sum40++;}
-                    else if (passenger.getAge() > 40 && passenger.getAge() <= 50) {sum50++;}
-                    else if (passenger.getAge() > 50) {sum51PP++;}
-                }catch (NullPointerException e){}
-
-                if (passenger.getParch() >= 1 || passenger.getSibSp() >= 1){sumWithClose++;}
-                else if (passenger.getParch() == 0 && passenger.getSibSp() == 0){sumWithoutClose++;}
-
-                if (passenger.getFare() <= 10){sumCostTicket_10++;}
-                else if (passenger.getFare() > 10 && passenger.getFare() <= 30){sumCostTicket_30++;}
-                else if (passenger.getFare() > 30) {sumCostTicket_31PP++;}
-
-                if (passenger.getEmbarked().equalsIgnoreCase(C)){sum_C++;}
-                else if (passenger.getEmbarked().equalsIgnoreCase(Q)){sum_Q++;}
-                else if (passenger.getEmbarked().equalsIgnoreCase(S)){sum_S++;}
-
+                incrementCount(survivedClassCount, passenger.getPClass());
+                incrementCount(survivedGenderCount, passenger.getSex());
+                incrementCount(survivedAgeGroupCount, getAgeGroup(passenger.getAge()));
+                incrementCount(survivedCloseRelativesCount, hasCloseRelatives(passenger));
+                incrementCount(survivedFareGroupCount, getFareGroup(passenger.getFare()));
+                incrementCount(survivedEmbarkedCount, passenger.getEmbarked());
             }
-
         }
 
-        float avg1st = (float) sumSurvived1st / count1st * 100 ;
-        float avg2nd = (float) sumSurvived2nd / count2nd * 100;
-        float avg3rd = (float) sumSurvived3rd / count3rd * 100;
+        float avg1st = calculatePercentage(survivedClassCount.getGenericMap().get(ST_1), classCount.getGenericMap().get(ST_1));
+        float avg2nd = calculatePercentage(survivedClassCount.getGenericMap().get(ND_2), classCount.getGenericMap().get(ND_2));
+        float avg3rd = calculatePercentage(survivedClassCount.getGenericMap().get(RD_3), classCount.getGenericMap().get(RD_3));
 
-        float avgMale = (float) sumMale / countMale * 100;
-        float avgFemale = (float) sumFemale / countFemale * 100;
+        float avgMale = calculatePercentage(survivedGenderCount.getGenericMap().get(MALE), genderCount.getGenericMap().get(MALE));
+        float avgFemale = calculatePercentage(survivedGenderCount.getGenericMap().get(FEMALE), genderCount.getGenericMap().get(FEMALE));
 
-        float avg10 = (float) sum10 / count10 * 100;
-        float avg20 = (float) sum20 / count20 * 100;
-        float avg30 = (float) sum30 / count30 * 100;
-        float avg40 = (float) sum40 / count40 * 100;
-        float avg50 = (float) sum50 / count50 * 100;
-        float avg51PP = (float) sum51PP / count51PP * 100;
+        float avg10 = calculatePercentage(survivedAgeGroupCount.getGenericMap().get(10), ageGroupCount.getGenericMap().get(10));
+        float avg20 = calculatePercentage(survivedAgeGroupCount.getGenericMap().get(20), ageGroupCount.getGenericMap().get(20));
+        float avg30 = calculatePercentage(survivedAgeGroupCount.getGenericMap().get(30), ageGroupCount.getGenericMap().get(30));
+        float avg40 = calculatePercentage(survivedAgeGroupCount.getGenericMap().get(40), ageGroupCount.getGenericMap().get(40));
+        float avg50 = calculatePercentage(survivedAgeGroupCount.getGenericMap().get(50), ageGroupCount.getGenericMap().get(50));
+        float avg51PP = calculatePercentage(survivedAgeGroupCount.getGenericMap().get(51), ageGroupCount.getGenericMap().get(51));
 
-        float avgWithClose = (float) sumWithClose / countWithClose * 100;
-        float avgWithoutClose = (float) sumWithoutClose / countWithoutClose * 100;
+        float avgWithClose = calculatePercentage(survivedCloseRelativesCount.getGenericMap().get(true), closeRelativesCount.getGenericMap().get(true));
+        float avgWithoutClose = calculatePercentage(survivedCloseRelativesCount.getGenericMap().get(false), closeRelativesCount.getGenericMap().get(false));
 
-        float avgCostTicket10 = (float) sumCostTicket_10 / countCostTicket_10 * 100;
-        float avgCostTicket30 = (float) sumCostTicket_30 / countCostTicket_30 * 100;
-        float avgCostTicket31PP = (float) sumCostTicket_31PP / countCostTicket_31PP * 100;
+        float avgCostTicket10 = calculatePercentage(survivedFareGroupCount.getGenericMap().get(10), fareGroupCount.getGenericMap().get(10));
+        float avgCostTicket30 = calculatePercentage(survivedFareGroupCount.getGenericMap().get(30), fareGroupCount.getGenericMap().get(30));
+        float avgCostTicket31PP = calculatePercentage(survivedFareGroupCount.getGenericMap().get(31), fareGroupCount.getGenericMap().get(31));
 
-        float avg_C = (float) sum_C / count_C * 100;
-        float avg_Q = (float) sum_Q / count_Q * 100;
-        float avg_S = (float) sum_S / count_S * 100;
+        float avg_C = calculatePercentage(survivedEmbarkedCount.getGenericMap().get(C), embarkedCount.getGenericMap().get(C));
+        float avg_Q = calculatePercentage(survivedEmbarkedCount.getGenericMap().get(Q), embarkedCount.getGenericMap().get(Q));
+        float avg_S = calculatePercentage(survivedEmbarkedCount.getGenericMap().get(S), embarkedCount.getGenericMap().get(S));
 
-        FileWriter fw = new FileWriter(FULL_PATH_OF_STATISTIC);
-        PrintWriter pw = new PrintWriter(fw);
+        try (PrintWriter pw = new PrintWriter(new FileWriter(FULL_PATH_OF_STATISTIC))) {
+            pw.println("אחוזי הישרדות לפי -->>");
+            pw.println("מחלקה:");
+            pw.printf("1st --> %.2f%%%n", avg1st);
+            pw.printf("2nd --> %.2f%%%n", avg2nd);
+            pw.printf("3rd --> %.2f%%%n", avg3rd);
 
-        pw.println("אחוזי הישרדות לפי -->>");
-        pw.println("מחלקה:");
-        pw.print("1st --> " + avg1st + N);
-        pw.print("2nd --> " + avg2nd + N);
-        pw.print("3rd --> " + avg3rd + N);
+            pw.print(N);
 
-        pw.println(" ");
+            pw.println("מין:");
+            pw.printf(MALE + " --> %.2f%%%n", avgMale);
+            pw.printf(FEMALE + " --> %.2f%%%n", avgFemale);
 
-        pw.println("מין:");
-        pw.print(MALE + " --> " + avgMale + N);
-        pw.print(FEMALE + " --> " + avgFemale + N);
+            pw.print(N);
 
-        pw.println(" ");
+            pw.println("קבוצת גיל:");
+            pw.printf("0-10 --> %.2f%%%n", avg10);
+            pw.printf("11-20 --> %.2f%%%n", avg20);
+            pw.printf("21-30 --> %.2f%%%n", avg30);
+            pw.printf("31-40 --> %.2f%%%n", avg40);
+            pw.printf("41-50 --> %.2f%%%n", avg50);
+            pw.printf("51+ --> %.2f%%%n", avg51PP);
 
-        pw.println("קבוצת גיל:");
-        pw.print("0-10 --> " + avg10 + N );
-        pw.print("11-20 --> " + avg20 + N );
-        pw.print("21-30 --> " + avg30 + N );
-        pw.print("31-40 --> " + avg40 + N );
-        pw.print("41-50 --> " + avg50 + N );
-        pw.print("51+ --> " + avg51PP + N );
+            pw.print(N);
 
-        pw.println(" ");
+            pw.println("האם יש בני משפחה על הסיפון:");
+            pw.printf("With relatives --> %.2f%%%n", avgWithClose);
+            pw.printf("Without relatives --> %.2f%%%n", avgWithoutClose);
 
-        pw.println("האם יש בני משפחה על הסיפון:");
-        pw.print("With relatives --> " + avgWithClose + N);
-        pw.print("Without relatives --> " + avgWithoutClose + N);
+            pw.print(N);
 
-        pw.println(" ");
+            pw.println("עלות כרטיס:");
+            pw.printf("0-10 --> %.2f%%%n", avgCostTicket10);
+            pw.printf("11-30 --> %.2f%%%n", avgCostTicket30);
+            pw.printf("31+ --> %.2f%%%n", avgCostTicket31PP);
 
-        pw.println("עלות כרטיס:");
-        pw.print("0-10 --> " + avgCostTicket10 + N );
-        pw.print("11-30 --> " + avgCostTicket30 + N );
-        pw.print("31+ --> " + avgCostTicket31PP + N );
+            pw.print(N);
 
-        pw.println(" ");
-
-        pw.println("הנמל שממנו העפילו לספינה:");
-        pw.print("C – צ'רבורג --> " + avg_C + N );
-        pw.print("Q – קווינסטאון --> " + avg_Q + N );
-        pw.print("S – סאות'המפטון --> " + avg_S + N );
+            pw.println("הנמל שממנו העפילו לספינה:");
+            pw.printf("C – צ'רבורג --> %.2f%%%n", avg_C);
+            pw.printf("Q – קווינסטאון --> %.2f%%%n", avg_Q);
+            pw.printf("S – סאות'המפטון --> %.2f%%%n", avg_S);
+        }
 
         JOptionPane.showMessageDialog(null, TEXT_19);
-        pw.close();
     }
+
+    private void incrementCount(Generic<String, Integer> countMap, String key) {
+        countMap.put(key, countMap.getGenericMap().getOrDefault(key, 0) + 1);
+    }
+
+    private void incrementCount(Generic<Integer, Integer> countMap, Integer key) {
+        countMap.put(key, countMap.getGenericMap().getOrDefault(key, 0) + 1);
+    }
+
+    private void incrementCount(Generic<Boolean, Integer> countMap, Boolean key) {
+        countMap.put(key, countMap.getGenericMap().getOrDefault(key, 0) + 1);
+    }
+
+    private int getAgeGroup(Double age) {
+        if (age == null) return -1;
+        if (age <= 10) return 10;
+        if (age <= 20) return 20;
+        if (age <= 30) return 30;
+        if (age <= 40) return 40;
+        if (age <= 50) return 50;
+        return 51;
+    }
+
+    private boolean hasCloseRelatives(Passenger passenger) {
+        return passenger.getParch() >= 1 || passenger.getSibSp() >= 1;
+    }
+
+    private int getFareGroup(Double fare) {
+        if (fare == null) return -1;
+        if (fare <= 10) return 10;
+        if (fare <= 30) return 30;
+        return 31;
+    }
+
+    private float calculatePercentage(Integer survivedCount, Integer totalCount) {
+        if (totalCount == null || totalCount == 0) return 0;
+        return (float) survivedCount / totalCount * 100;
+    }
+
 
     private void performDataGrouping(){
         Map<String, Float> dataGroupMap = new HashMap<>();
-        String selectedClass = dataGroupingComboBox.getSelectedItem().toString();
-        float percentage = 0.0f;
+        String selectedClassText = dataGroupingComboBox.getSelectedItem().toString();
+        Constants.GroupingOption selectedClass = Constants.GroupingOption.fromText(selectedClassText);
 
+        Generic<String, Integer> genericCountMap = switch (selectedClass) {
+            case PCLASS -> countByField(passenger -> String.valueOf(passenger.getPClass()));
+            case SEX -> countByField(Passenger::getSex);
+            case EMBARKED -> countByField(Passenger::getEmbarked);
+            case SIBSP -> countByField(passenger -> String.valueOf(passenger.getSibSp()));
+            case SURVIVED -> countByField(Passenger::getSurvivedString);
+            case PARCH -> countByField(passenger -> String.valueOf(passenger.getParch()));
+            case AGE -> countByField(passenger -> String.valueOf(passenger.getAge()));
+            default -> throw new IllegalArgumentException(ERROR_6);
+        };
 
-        if (selectedClass.equals(TEXT_24)) {
-            Map<Integer, Integer> classCountMap = new HashMap<>();
-
-            for (Passenger passenger : passengerList) {
-                classCountMap.put(passenger.getPClass(), classCountMap.getOrDefault(passenger.getPClass(), 0) + 1);
-            }
-
-            for (Map.Entry<Integer, Integer> entry : classCountMap.entrySet()) {
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey()  + "|", percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_3)) {
-            Generic<String, Integer> genericSexCount = new Generic<>();
-
-            for (Passenger passenger : passengerList) {
-                genericSexCount.put(passenger.getSex(),genericSexCount.getGenericMap().getOrDefault(passenger.getSex(),0) + 1);
-            }
-
-            for (Map.Entry<String, Integer> entry : genericSexCount.getGenericMap().entrySet()) {
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_4)){
-            Generic<String,Integer> genericEmbarkedCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericEmbarkedCount.put(passenger.getEmbarked(),genericEmbarkedCount.getGenericMap().getOrDefault(passenger.getEmbarked(), 0) + 1);
-            }
-
-            for (Map.Entry<String,Integer> entry : genericEmbarkedCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_8)){
-            Generic<Integer,Integer> genericSibSpCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericSibSpCount.put(passenger.getSibSp(),genericSibSpCount.getGenericMap().getOrDefault(passenger.getSibSp(),0) + 1);
-            }
-
-            for (Map.Entry<Integer,Integer> entry : genericSibSpCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_25)){
-            Generic<String,Integer> genericSurvivedCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericSurvivedCount.put(passenger.getSurvivedString(),genericSurvivedCount.getGenericMap().getOrDefault(passenger.getSurvivedString(),0) + 1);
-            }
-
-            for (Map.Entry<String,Integer> entry : genericSurvivedCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|",percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_9)){
-            Generic<Integer,Integer> genericParchCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericParchCount.put(passenger.getParch(),genericParchCount.getGenericMap().getOrDefault(passenger.getParch(),0) + 1);
-            }
-
-            for (Map.Entry<Integer,Integer> entry : genericParchCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|", percentage);
-            }
-        }
-
-        if (selectedClass.equals(TEXT_26)){
-            Generic<Double,Integer> genericAgeCount = new Generic<>();
-
-            for (Passenger passenger : passengerList){
-                genericAgeCount.put(passenger.getAge(),genericAgeCount.getGenericMap().getOrDefault(passenger.getAge(),0) + 1);
-            }
-
-            for (Map.Entry<Double,Integer> entry : genericAgeCount.getGenericMap().entrySet()){
-                percentage = percentage(entry.getValue());
-                dataGroupMap.put("|" + entry.getKey() + "|" ,percentage);}
-        }
+        genericCountMap.getGenericMap().forEach((key, value) -> {
+            float percentage = percentage(value);
+            dataGroupMap.put("|" + key + "|", percentage);
+        });
 
         Map<String, Float> sortedDataGroupMap = dataGroupMap.entrySet().stream()
                 .sorted(Map.Entry.<String, Float>comparingByValue().reversed())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
-
         StringBuilder resultText = new StringBuilder(TOTAL).append(N);
-        for (Map.Entry<String, Float> entry : sortedDataGroupMap.entrySet()) {
-            resultText.append(entry.getKey()).append(" ").append(entry.getValue()).append("% " + N);
-        }
+        sortedDataGroupMap.forEach((key, value) -> resultText.append(key).append(" ").append(value).append("% ").append(N));
 
         /**
-         * print to console
+         *  print to console
          */
         System.out.println(resultText);
-//        /**
-//         * print to GUI
-//         */
-//        resultDataGroupLabel.setFont(MY_FONT_2);
-//        resultDataGroupLabel.setForeground(Color.GREEN);
-//        resultDataGroupLabel.setText(resultText.toString());
+
         /**
          * show result on the screen
          */
-        JOptionPane.showMessageDialog(null,resultText);
+        JOptionPane.showMessageDialog(null, resultText);
     }
+
+    private Generic<String, Integer> countByField(Function<Passenger, String> fieldExtractor) {
+        Generic<String, Integer> genericCount = new Generic<>();
+        for (Passenger passenger : passengerList) {
+            String key = fieldExtractor.apply(passenger);
+            genericCount.put(key, genericCount.getGenericMap().getOrDefault(key, 0) + 1);
+        }
+        return genericCount;
+    }
+
 
     private float percentage (int value){
         return (float) value / passengerList.size() * 100;
